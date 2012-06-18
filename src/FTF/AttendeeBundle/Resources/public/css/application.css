@@ -2,4 +2,5 @@ body { padding-top: 60px; }
 .navbar form{ margin: 5px 0px 0px 0px; }
 .navbar form .control-group{ margin: 0px; } 
 .span2 img{ width: 100%; }
-footer{ background-color: black; color: white; }
+footer{ background-color: black; color: white; padding: 10px 0px; }
+.brand small{ font-size: 60%; }

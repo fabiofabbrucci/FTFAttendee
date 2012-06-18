@@ -10,10 +10,15 @@
                         <img src="http://api.twitter.com/1/users/profile_image?screen_name={{ att.twitter }}&size=bigger" />
                     </a>
                     <h4>{{ att.name }} {{ att.surname }}</h4>
+                    @{{ att.twitter }}
                 </div>
         {% if loop.last or loop.index is divisibleby(6) %}
             </div>
             <hr />
         {% endif %}
     {% endfor %}
+{% endblock %}
+            
+{% block enum %}
+    <small>{{ attendees|length }} with Twitter</small>
 {% endblock %}

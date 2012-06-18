@@ -4,7 +4,6 @@
 
     {% stylesheets
         'bundles/ftfattendee/css/bootstrap.css'
-        'bundles/ftfattendee/css/bootstrap-responsive.css'
         'bundles/ftfattendee/css/application.css'
     %}
 <link rel="stylesheet" href="{{ asset_url }}" />
@@ -15,7 +14,7 @@
     <div class="navbar navbar-fixed-top">
         <div class="navbar-inner">
             <div class="container-fluid">
-                <a class="brand" href="#">From The Front 2012 - Attendees</a>
+                <a class="brand" href="#">From The Front 2012 - Attendees{% block enum %}{% endblock %}</a>
                 <div class="pull-right">
                     <form class="form-horizontal" method="post">
                         <div class="control-group">
