@@ -1,0 +1,189 @@
+
+<project name="abmundi">
+    <target name="build"
+            depends="prepare,vendors,lint,phpcs-ci,phpcpd,phpunit,dbreset-test,behat-without-dbreset,phpunit-cov,phpunit-cov-ci" />
+
+    <target name="build-local"
+            depends="prepare,lint,phpcpd,phpcs,dbreset-test,behat-without-dbreset,phpunit,dbreset" />
+
+    <target name="vendors"
+            description="Update Symfony Vendors">
+        <exec command="./bin/vendors update" /> 
+    </target>
+
+    <target name="clean" 
+            description="Cleanup build artifacts">
+        <delete dir="./build/reports" />
+    </target>
+    
+    <target name="dbreset"
+            description="Reset Dev DB">
+        <exec command="./app/console doctrine:database:drop --force" outputProperty="return" />
+        <exec command="./app/console doctrine:database:create" outputProperty="return" />
+        <exec command="./app/console doctrine:migrations:migrate --no-interaction" outputProperty="return" />
+        <exec command="./app/console fos:user:create admin admin@abmundi.com admin" outputProperty="return" />
+        <exec command="./app/console fos:user:activate admin" outputProperty="return" />
+    </target>
+    
+    <target name="dbreset-test"
+            description="Reset Only Behat DB">
+        <exec command="./app/console --env=test doctrine:database:drop --force" outputProperty="return" />
+        <exec command="./app/console --env=test doctrine:database:create" outputProperty="return" />
+        <exec command="./app/console --env=test doctrine:migrations:migrate --no-interaction" outputProperty="return" />
+        
+        <exec command="./app/console --env=behat doctrine:database:drop --force" outputProperty="return" />
+        <exec command="./app/console --env=behat doctrine:database:create" outputProperty="return" />
+        <exec command="./app/console --env=behat doctrine:migrations:migrate --no-interaction" outputProperty="return" />
+    </target>
+    
+    <target name="dbclear"
+            description="Clear Dev DB">
+        <pdosqlexec url="mysql:host=localhost;dbname=abmundi" userid="root" password="root">
+            <transaction src="build/sql/truncate.sql"/>
+            <formatter type="plain" outfile="build/reports/truncate.txt"/>
+        </pdosqlexec>
+        <exec command="./app/console doctrine:migrations:migrate --no-interaction" outputProperty="return" />
+        <exec command="./app/console fos:user:create admin admin@abmundi.com admin" outputProperty="return" />
+        <exec command="./app/console fos:user:activate admin" outputProperty="return" />
+    </target>
+    <target name="dbclear-test"
+            description="Clear Dev DB">
+        <pdosqlexec url="mysql:host=localhost;dbname=abmundi_test" userid="root" password="root">
+            <transaction src="build/sql/truncate.sql"/>
+            <formatter type="plain" outfile="build/reports/truncate.txt"/>
+        </pdosqlexec>
+        <exec command="./app/console --env=test doctrine:migrations:migrate --no-interaction" outputProperty="return" />
+        
+        <pdosqlexec url="mysql:host=localhost;dbname=abmundi_behat" userid="root" password="root">
+            <transaction src="build/sql/truncate.sql"/>
+            <formatter type="plain" outfile="build/reports/truncate.txt"/>
+        </pdosqlexec>
+        <exec command="./app/console --env=behat doctrine:migrations:migrate --no-interaction" outputProperty="return" />
+    </target>
+
+    <target name="prepare" 
+            depends="clean"
+            description="Prepare for build">
+        <mkdir dir="./build/reports" />
+        <mkdir dir="./build/reports/api" />
+        <mkdir dir="./build/reports/code-browser" />
+        <mkdir dir="./build/reports/coverage" />
+        <mkdir dir="./build/reports/pdepend" />
+        <mkdir dir="./build/reports/phpunit" />
+        <mkdir dir="./web/uploads" />
+        <mkdir dir="./web/uploads/images" />
+    </target>
+
+    <target name="lint"
+            description="Run lint (static syntax)">
+        <phplint haltonfailure="true">
+            <fileset dir="./src">
+                <include name="**/*.php" />
+                <include name="**/*.php" />
+            </fileset>
+        </phplint>
+    </target>
+
+    <target name="phploc" 
+            description="Measure project size using PHPLOC">
+        <exec executable="phploc">
+            <arg value="--log-csv" />
+            <arg value="./build/reports/phploc.csv" />
+            <arg path="./src" />
+        </exec>
+    </target>
+
+    <target name="phpcs"
+            description="Symfony2 coding standard">
+        <phpcodesniffer
+            standard="Symfony2"
+            format="full"
+            docGenerator="HTML"
+            docFile="./build/reports/standard.html"
+            allowedFileExtensions="php">
+            <fileset dir="./src">
+                <include name="**/*.php" />
+                <exclude name="**/*Extension.php" />
+                <exclude name="**/FeatureContext.php" />
+                <exclude name="**/Configuration.php" />
+                <exclude name="ABMundi/NotificationBundle/Entity/EventListener.php" />
+                <exclude name="ABMundi/GoalBundle/Entity/GoalListener.php" />
+            </fileset>
+        </phpcodesniffer>
+    </target>
+
+    <target name="phpcs-ci"
+            description="Coding standar for CI">
+        <phpcodesniffer
+            standard="Symfony2">
+            <fileset dir="./src">
+                <include name="**/*.php" />
+                <exclude name="**/*Extension.php" />
+                <exclude name="**/FeatureContext.php" />
+                <exclude name="**/Configuration.php" />
+            </fileset>
+            <formatter type="default" usefile="false" />
+            <formatter type="checkstyle" outfile="./build/reports/checkstyle.xml" />
+        </phpcodesniffer>
+    </target>
+
+    <target name="phpcpd" 
+            description="Find duplicate code using PHPCPD">
+        <phpcpd>
+            <fileset dir="./src">
+                <include name="**/*.php" />
+            </fileset>
+            <formatter type="default" outfile="./build/reports/deafult.xml" />
+        </phpcpd>
+        <phpcpd>
+            <fileset dir="./src">
+                <include name="**/*.php" />
+            </fileset>
+        </phpcpd>
+        <phpcpd>
+            <fileset dir="./src">
+                <include name="**/*.php" />
+            </fileset>
+            <formatter type="pmd" outfile="./build/reports/pmd-cpd.xml" />
+        </phpcpd>
+    </target>
+
+    <target name="behat" depends="dbclear-test"
+            description="Launch Behat with dbreset-test">
+        <phingcall target="behat-without-dbreset" />
+    </target>
+
+    <target name="behat-without-dbreset" 
+            description="Behat BDD Test"
+    >
+        <echo message="./app/console --env=behat cache:clear" />
+        <exec command="./app/console --env=behat cache:clear" outputProperty="return" />
+        
+        <echo message="./app/console --env=behat behat @ABMundi[bundle]Bundle/[feature].feature:[line] --format=progress" />
+        
+        <property name="command" value="sh behat"></property>
+
+        <echo message="${command}" />
+        <exec command="${command}" outputProperty="return" />
+        <echo message="${return}"></echo>
+    </target>
+ 
+    <target name="phpunit" 
+            description="Run unit tests with PHPUnit">
+        <exec command="phpunit -c app" outputProperty="return" />
+        <echo message="${return}"></echo>
+    </target>
+ 
+    <target name="phpunit-cov" 
+            description="Code Coverage" 
+            depends="prepare">
+        <exec command="phpunit --coverage-html=build/reports/coverage -c app/"  outputProperty="return"  />
+        <echo message="${return}"></echo>
+    </target>
+
+    <target name="phpunit-cov-ci" 
+            description="Code Coverage for CI" 
+            depends="prepare">
+        <exec command="phpunit --coverage-clover=build/reports/coverage.clover.xml -c app/" />
+    </target>
+</project>

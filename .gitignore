@@ -1,0 +1,36 @@
+# symfony files
+vendor/*
+app/bootstrap*
+web/bundles/
+web/css/*
+web/js/*
+web/images/*
+web/uploads/*
+web/media/cache/*
+app/cache/*
+app/logs/*
+app/spool/*
+app/tmp/*
+deps.lock
+*~
+
+# backups
+backups/*
+
+# netbean files
+nbproject/*
+ 
+# config files to ignore
+app/config/parameters.ini
+app/config/parameters.yml
+
+# phpunit files to ignore
+app/phpunit.xml
+
+# build directories
+build/reports/*
+
+# capifony
+.rsync_cache
+
+!*.gitkeep

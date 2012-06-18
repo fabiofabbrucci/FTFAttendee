@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="abmundi" default="build">
+    <import file="build/jenkins.xml" />
+
+    <!-- ============================================  -->
+    <!-- Target: install                               -->
+    <!-- ============================================  -->
+    <target name="install"
+            description="Prepare project after git clone">
+                
+        <input propertyname="username" defaultValue="root" promptChar="?">The database username</input>
+        <input propertyname="password" defaultValue="root" promptChar="?">The database password</input>        
+        
+        <phingcall target="chmod" />
+
+        <phingcall target="vendors" />
+        
+        <echo msg="parameters.ini" />
+        <copy file="app/config/parameters.ini.dist" tofile="app/config/parameters.ini" overwrite="false">
+            <filterchain>
+                <replacetokens begintoken="[[" endtoken="]]">
+                    <token key="username" value="${username}" />
+                    <token key="password" value="${password}" />
+                </replacetokens>
+            </filterchain>
+        </copy>
+
+        <phingcall target="daily" />
+    </target>
+    
+    <target name="chmod">
+        <echo msg="mkdir cache, logs, ..." />
+        <mkdir dir="app/cache" />
+        <mkdir dir="app/logs" />
+        <mkdir dir="app/spool" />
+        <mkdir dir="web/uploads" />
+        <mkdir dir="web/uploads/images" />
+        <mkdir dir="web/uploads/images/goals" />
+        <echo msg="chmod 777 on cache and logs" />
+        <exec command="chmod -R 777 app/cache" />
+        <exec command="chmod -R 777 app/logs" />
+        <exec command="chmod -R 777 app/spool" />
+        <exec command="chmod -R 777 web/uploads" />
+        <exec command="chmod -R 777 web/media" />
+        <echo msg="setfacl on cache and logs" />
+        <exec command="chmod +x bin/java_wrapper" />
+        <exec command="setfacl -R -m u:www-data:rwx -m u:`whoami`:rwx app/cache app/logs web/uploads web/media app/spool" />
+        <exec command="setfacl -dR -m u:www-data:rwx -m u:`whoami`:rwx app/cache app/logs web/uploads web/media app/spool" />
+    </target>
+    
+    <target name="daily"
+            description="Run daily check">
+        <phingcall target="design" />
+        <echo msg="Cache Test" />
+        <exec command="./app/console --env=test cache:clear" />
+        <echo msg="Build-Local" />
+        <phingcall target="build-local" />
+    </target>
+    
+    <target name="design"
+            description="Run design task (cache,assets,assetic)">
+        <echo msg="Cache" />
+        <exec command="./app/console cache:clear" outputProperty="return" />
+        <echo message="${return}"></echo>       
+        <echo msg="Assets" />
+        <exec command="./app/console assets:install --symlink web" outputProperty="return" />
+        <echo message="${return}"></echo>       
+        <echo msg="Assetic" />
+        <exec command="./app/console assetic:dump" outputProperty="return" />
+        <echo message="${return}"></echo>       
+    </target>
+   
+   <target name="admin-create"
+            description="Generate a super admin user">
+        <exec command="./app/console fos:user:create admin admin@abmundi.com 48admin." outputProperty="return" />
+        <echo message="${return}"></echo>       
+        <exec command="./app/console fos:user:activate admin" outputProperty="return" />
+        <echo message="${return}"></echo>       
+        <exec command="./app/console fos:user:promote admin ROLE_SUPER_ADMIN" outputProperty="return" />
+        <echo message="${return}"></echo>       
+    </target>
+    
+    <target name="stress"
+            description="Load a lot of data in database">
+        <echo message="./app/console doctrine:fixtures:load --fixtures=src/ABMundi/Common/DataFixtures/ORM/stress" />
+        <exec command="./app/console doctrine:fixtures:load --fixtures=src/ABMundi/Common/DataFixtures/ORM/stress" outputProperty="return" />
+        <echo message="${return}"></echo>       
+    </target>
+    
+    <target name="deploy"
+            description="Deploy in production">
+        <echo message="cap production deploy" />
+        <exec command="cap production deploy" outputProperty="return" />
+        <echo message="${return}"></echo>       
+    </target>
+    
+</project>
