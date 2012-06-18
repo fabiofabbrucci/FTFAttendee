@@ -45,7 +45,7 @@ class Attendee
     /**
      * @var string $amiandoid
      *
-     * @ORM\Column(name="amiandoid", type="string", length=255)
+     * @ORM\Column(name="amiandoid", type="string", length=255, nullable=true)
      */
     private $amiandoid;
 
