@@ -14,6 +14,10 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        return array();
+        
+        $em = $this->getDoctrine()->getEntityManager();
+        $attendees = $em->getRepository('FTFAttendeeBundle:Attendee')
+                ->findAll();
+        return array('attendees' => $attendees);
     }
 }

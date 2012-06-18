@@ -1,0 +1,44 @@
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+
+    {% stylesheets
+        'bundles/ftfattendee/css/bootstrap.css'
+        'bundles/ftfattendee/css/bootstrap-responsive.css'
+        'bundles/ftfattendee/css/application.css'
+    %}
+<link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+{% endblock %}
+
+{% block body %}
+    <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container-fluid">
+                <a class="brand" href="#">From The Front 2012 - Attendees</a>
+                <div class="pull-right">
+                    <form class="form-horizontal" method="post">
+                        <div class="control-group">
+                            <label class="control-label" for="input01">Who are my friends?</label>
+                            <div class="controls">
+                                <div class="input-prepend">
+                                    <span class="add-on">@</span>
+                                    <input class="span3" id="prependedInput" name="user" type="text" placeholder="Type here your Twitter account" />
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+    {% block content %}{% endblock %}    
+        </div>
+        <footer class="footer">
+            <div class="container-fluid">
+                &copy; 2012 
+            </div>
+        </div>
+{% endblock %}
