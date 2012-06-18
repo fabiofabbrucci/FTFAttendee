@@ -12,4 +12,9 @@ use Doctrine\ORM\EntityRepository;
  */
 class AttendeeRepository extends EntityRepository
 {
+    public function clear()
+    {
+        $query = $this->_em->createQuery('DELETE FTF\AttendeeBundle\Entity\Attendee');
+        $query->execute();
+    }
 }

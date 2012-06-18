@@ -114,6 +114,9 @@ class Attendee
      */
     public function setTwitter($twitter)
     {
+        if(substr($twitter, 0, 1) == '@'){
+            $twitter = substr($twitter, 1);
+        }
         $this->twitter = $twitter;
     }
 
