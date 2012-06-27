@@ -47,7 +47,7 @@ class AttendeeCommand extends ContainerAwareCommand
                     $first_line = !$first_line;
                     continue;
                 }
-                if (strlen($data[3])) {
+                if (strlen($data[3]) and $count < 1000) {
                     $att = new \FTF\AttendeeBundle\Entity\Attendee();
                     $att->setName($data[0]);
                     $att->setSurname($data[1]);
