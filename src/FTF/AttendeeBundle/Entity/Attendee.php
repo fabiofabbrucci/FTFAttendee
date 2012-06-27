@@ -43,21 +43,6 @@ class Attendee
     private $twitter;
 
     /**
-     * @var string $amiandoid
-     *
-     * @ORM\Column(name="amiandoid", type="string", length=255, nullable=true)
-     */
-    private $amiandoid;
-
-    /**
-     * @var string $email
-     *
-     * @ORM\Column(name="email", type="string", length=255)
-     */
-    private $email;
-
-
-    /**
      * Get id
      *
      * @return integer 
@@ -128,45 +113,5 @@ class Attendee
     public function getTwitter()
     {
         return $this->twitter;
-    }
-
-    /**
-     * Set amiandoid
-     *
-     * @param string $amiandoid
-     */
-    public function setAmiandoid($amiandoid)
-    {
-        $this->amiandoid = $amiandoid;
-    }
-
-    /**
-     * Get amiandoid
-     *
-     * @return string 
-     */
-    public function getAmiandoid()
-    {
-        return $this->amiandoid;
-    }
-
-    /**
-     * Set email
-     *
-     * @param string $email
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
-    }
-
-    /**
-     * Get email
-     *
-     * @return string 
-     */
-    public function getEmail()
-    {
-        return $this->email;
     }
 }

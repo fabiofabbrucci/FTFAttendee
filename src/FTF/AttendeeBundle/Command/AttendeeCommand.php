@@ -1,4 +1,5 @@
 <?php
+
 namespace FTF\AttendeeBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -15,12 +16,12 @@ class AttendeeCommand extends ContainerAwareCommand
     protected $amiandoapikey;
     protected $tickets;
     protected $container, $em, $ar;
-    
+
     protected function configure()
     {
         $this
-            ->setName('attendee:load')
-            ->setDescription('Load attendee from amiando')
+                ->setName('attendee:load')
+                ->setDescription('Load attendee from amiando')
         ;
     }
 
@@ -29,51 +30,34 @@ class AttendeeCommand extends ContainerAwareCommand
         $this->container = $this->getApplication()->getKernel()->getContainer();
         $this->eventId = $this->container->getParameter('eventid');
         $this->amiandoapikey = $this->container->getParameter('amiandoapikey');
-        
+
         $this->em = $this->getContainer()->get('doctrine')->getEntityManager('default');
         $this->ar = $this->getContainer()->get('doctrine')->getRepository('FTFAttendeeBundle:Attendee');
-        $this->prepareEnviroment($output);
-        $this->loadAttendees($output);
+        $this->loadAttendeeFromCsv($output);
     }
-    
-    protected function prepareEnviroment(OutputInterface $output)
+
+    protected function loadAttendeeFromCsv(OutputInterface $output)
     {
-        $this->tickets = json_decode(file_get_contents('http://www.amiando.com/api/ticket/find/?apikey='. $this->amiandoapikey .'&version=1&format=json&eventId=' . $this->eventId), true);
-        if($this->tickets['ids'])
-        {
-            $this->tickets = $this->tickets['ids'];
-            if(count($this->tickets) > 0){
-                $output->writeln('<info>Found ' . count($this->tickets) . ' tickets</info>');
-                $this->ar->clear();
-                return true;
-            }
-        }
-        return false;
-    }
-    
-    protected function loadAttendees(OutputInterface $output)
-    {
-        $noTwitter = 0;
-        foreach($this->tickets as $ticket){
-            $attendee = json_decode(file_get_contents('http://www.amiando.com/api/ticket/' . $ticket . '/?apikey='. $this->amiandoapikey .'&version=1&format=json'));
-            $att = new \FTF\AttendeeBundle\Entity\Attendee();
-            foreach ($attendee->ticket->userData as $data)
-            {
-                if($data->title == 'Twitter' and strlen($data->value)>0)
-                {
-                    $att->setAmiandoid($ticket);
-                    $att->setEmail($attendee->ticket->email);
-                    $att->setTwitter($data->value);
-                    $att->setName($attendee->ticket->firstName);
-                    $att->setSurname($attendee->ticket->lastName);
+        $count = 0;
+        $first_line = true;
+        if (($handle = fopen('https://www.amiando.com/ftf2012/reports/twitter_handles.csv?security=oBdSONjFgL', "r")) !== FALSE) {
+            $this->ar->clear();
+            while (($data = fgetcsv($handle, 1000, ";") ) !== FALSE) {
+                if($first_line){
+                    $first_line = !$first_line;
+                    continue;
+                }
+                if (strlen($data[3])) {
+                    $att = new \FTF\AttendeeBundle\Entity\Attendee();
+                    $att->setName($data[0]);
+                    $att->setSurname($data[1]);
+                    $att->setTwitter($data[3]);
                     $this->em->persist($att);
-                }else{
-                    $noTwitter++;
+                    $count++;
                 }
             }
+            $this->em->flush();
+            $output->writeln("<info>loaded $count users</info>");
         }
-        $this->em->flush();
-        $output->writeln('<warning>Attendees with no twitter: ' . $noTwitter . '</warning>');
-        $output->writeln('<info>Attendees loaded: ' . (count($this->tickets) - $noTwitter) . '</info>');
     }
 }
