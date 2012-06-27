@@ -41,6 +41,13 @@ class Attendee
      * @ORM\Column(name="twitter", type="string", length=255)
      */
     private $twitter;
+    
+    /**
+     * @var string $twitterid
+     *
+     * @ORM\Column(name="twitterid", type="string", length=255)
+     */
+    private $twitterid;
 
     /**
      * Get id
@@ -120,5 +127,25 @@ class Attendee
     public function getTwitter()
     {
         return $this->twitter;
+    }
+    
+    /**
+     * Set twitter
+     *
+     * @param string $twitter
+     */
+    public function setTwitterid($twitterid)
+    {
+        $this->twitterid = $twitterid;
+    }
+    
+    /**
+     * Get twitter
+     *
+     * @return string 
+     */
+    public function getTwitterid()
+    {
+        return $this->twitterid;
     }
 }

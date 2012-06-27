@@ -54,8 +54,12 @@ class AttendeeCommand extends ContainerAwareCommand
                     $att->setTwitter($data[3]);
                     if($att->isTwitterAccountValid())
                     {
+                        $twitterUsers = json_decode(file_get_contents('https://api.twitter.com/1/users/lookup.json?screen_name=' . $att->getTwitter()));
+                        $twitterUser = $twitterUsers[0];
+                        $att->setTwitterid($twitterUser->id);
                         $this->em->persist($att);
                         $count++;
+                        $output->writeln("<info>$count) " . $att->getTwitter() . "</info>");
                     }
                 }
             }
