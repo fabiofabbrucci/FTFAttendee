@@ -52,8 +52,11 @@ class AttendeeCommand extends ContainerAwareCommand
                     $att->setName($data[0]);
                     $att->setSurname($data[1]);
                     $att->setTwitter($data[3]);
-                    $this->em->persist($att);
-                    $count++;
+                    if($att->isTwitterAccountValid())
+                    {
+                        $this->em->persist($att);
+                        $count++;
+                    }
                 }
             }
             $this->em->flush();

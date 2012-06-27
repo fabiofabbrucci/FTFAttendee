@@ -104,6 +104,13 @@ class Attendee
         }
         $this->twitter = $twitter;
     }
+    
+    public function isTwitterAccountValid()
+    {
+        if(strpos($this->twitter, '@') !== false)
+            return false;
+        return true;
+    }
 
     /**
      * Get twitter
