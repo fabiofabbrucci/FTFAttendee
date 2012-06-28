@@ -9,6 +9,8 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use FTF\AttendeeBundle\Entity\Attendee;
+use FTF\AttendeeBundle\Entity\User;
 
 class AttendeeCommand extends ContainerAwareCommand
 {
@@ -48,18 +50,18 @@ class AttendeeCommand extends ContainerAwareCommand
                     continue;
                 }
                 if (strlen($data[3]) and $count < 1000) {
-                    $att = new \FTF\AttendeeBundle\Entity\Attendee();
-                    $att->setName($data[0]);
-                    $att->setSurname($data[1]);
-                    $att->setTwitter($data[3]);
-                    if($att->isTwitterAccountValid())
+                    $user = new User();
+                    $user->setName($data[0]);
+                    $user->setSurname($data[1]);
+                    $user->setTwitter($data[3]);
+                    if($user->loadTwitterid())
                     {
-                        $twitterUsers = json_decode(file_get_contents('https://api.twitter.com/1/users/lookup.json?screen_name=' . $att->getTwitter()));
-                        $twitterUser = $twitterUsers[0];
-                        $att->setTwitterid($twitterUser->id);
+                        $att = new Attendee();
+                        $att->setUser($user);
+                        $this->em->persist($user);
                         $this->em->persist($att);
                         $count++;
-                        $output->writeln("<info>$count) " . $att->getTwitter() . "</info>");
+                        $output->writeln("<info>$count) " . $user->getTwitter() . "</info>");
                     }
                 }
             }

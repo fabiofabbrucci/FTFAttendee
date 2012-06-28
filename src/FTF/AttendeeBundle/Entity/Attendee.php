@@ -20,35 +20,13 @@ class Attendee
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
-    /**
-     * @var string $name
-     *
-     * @ORM\Column(name="name", type="string", length=255)
-     */
-    private $name;
-
-    /**
-     * @var string $surname
-     *
-     * @ORM\Column(name="surname", type="string", length=255)
-     */
-    private $surname;
-
-    /**
-     * @var string $twitter
-     *
-     * @ORM\Column(name="twitter", type="string", length=255)
-     */
-    private $twitter;
     
     /**
-     * @var string $twitterid
-     *
-     * @ORM\Column(name="twitterid", type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
-    private $twitterid;
-
+    private $user;
+    
     /**
      * Get id
      *
@@ -58,94 +36,29 @@ class Attendee
     {
         return $this->id;
     }
-
-    /**
-     * Set name
-     *
-     * @param string $name
-     */
-    public function setName($name)
+    
+    public function setuser(User $user)
     {
-        $this->name = $name;
+        $this->user = $user;
     }
-
-    /**
-     * Get name
-     *
-     * @return string 
-     */
+    
     public function getName()
     {
-        return $this->name;
+        return $this->user->getName();
     }
-
-    /**
-     * Set surname
-     *
-     * @param string $surname
-     */
-    public function setSurname($surname)
-    {
-        $this->surname = $surname;
-    }
-
-    /**
-     * Get surname
-     *
-     * @return string 
-     */
+    
     public function getSurname()
     {
-        return $this->surname;
-    }
-
-    /**
-     * Set twitter
-     *
-     * @param string $twitter
-     */
-    public function setTwitter($twitter)
-    {
-        if(substr($twitter, 0, 1) == '@'){
-            $twitter = substr($twitter, 1);
-        }
-        $this->twitter = $twitter;
+        return $this->user->getSurname();
     }
     
-    public function isTwitterAccountValid()
-    {
-        if(strpos($this->twitter, '@') !== false)
-            return false;
-        return true;
-    }
-
-    /**
-     * Get twitter
-     *
-     * @return string 
-     */
     public function getTwitter()
     {
-        return $this->twitter;
+        return $this->user->getTwitter();
     }
     
-    /**
-     * Set twitter
-     *
-     * @param string $twitter
-     */
-    public function setTwitterid($twitterid)
-    {
-        $this->twitterid = $twitterid;
-    }
-    
-    /**
-     * Get twitter
-     *
-     * @return string 
-     */
     public function getTwitterid()
     {
-        return $this->twitterid;
+        return $this->user->getTwitterid();
     }
 }
