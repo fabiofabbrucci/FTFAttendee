@@ -35,6 +35,7 @@ class AttendeeCommand extends ContainerAwareCommand
 
         $this->em = $this->getContainer()->get('doctrine')->getEntityManager('default');
         $this->ar = $this->getContainer()->get('doctrine')->getRepository('FTFAttendeeBundle:Attendee');
+        $this->ur = $this->getContainer()->get('doctrine')->getRepository('FTFAttendeeBundle:User');
         $this->loadAttendeeFromCsv($output);
     }
 
@@ -49,20 +50,27 @@ class AttendeeCommand extends ContainerAwareCommand
                     $first_line = !$first_line;
                     continue;
                 }
-                if (strlen($data[3]) and $count < 1000) {
+                if (strlen($data[3]) and $count < 10) {
                     $user = new User();
-                    $user->setName($data[0]);
-                    $user->setSurname($data[1]);
                     $user->setTwitter($data[3]);
-                    if($user->loadTwitterid())
-                    {
-                        $att = new Attendee();
+                    
+                    $user = $this->ur->findOneByTwitter($user->getTwitter());
+                    $att = new Attendee();
+                    if($user){
                         $att->setUser($user);
+                    }else{
+                        $user = new User();
+                        $user->setName($data[0]);
+                        $user->setSurname($data[1]);
+                        $user->setTwitter($data[3]);
+                        $user->loadTwitterid();
+                        $att->setUser($user);
+                        
                         $this->em->persist($user);
-                        $this->em->persist($att);
-                        $count++;
-                        $output->writeln("<info>$count) " . $user->getTwitter() . "</info>");
                     }
+                    $this->em->persist($att);
+                    $count++;
+                    $output->writeln("<info>$count) " . $user->getTwitter() . "</info>");
                 }
             }
             $this->em->flush();

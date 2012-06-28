@@ -36,4 +36,29 @@ class Organizator
     {
         return $this->id;
     }
+    
+    public function setuser(User $user)
+    {
+        $this->user = $user;
+    }
+    
+    public function getName()
+    {
+        return $this->user->getName();
+    }
+    
+    public function getSurname()
+    {
+        return $this->user->getSurname();
+    }
+    
+    public function getTwitter()
+    {
+        return $this->user->getTwitter();
+    }
+    
+    public function getTwitterid()
+    {
+        return $this->user->getTwitterid();
+    }
 }
