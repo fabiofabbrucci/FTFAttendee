@@ -11,13 +11,14 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use FTF\AttendeeBundle\Entity\Attendee;
 use FTF\AttendeeBundle\Entity\User;
+use FTF\AttendeeBundle\Entity\Event;
 
 class AttendeeCommand extends ContainerAwareCommand
 {
     protected $eventId;
     protected $amiandoapikey;
     protected $tickets;
-    protected $container, $em, $ar;
+    protected $container, $em, $ar, $ur, $er;
 
     protected function configure()
     {
@@ -36,6 +37,7 @@ class AttendeeCommand extends ContainerAwareCommand
         $this->em = $this->getContainer()->get('doctrine')->getEntityManager('default');
         $this->ar = $this->getContainer()->get('doctrine')->getRepository('FTFAttendeeBundle:Attendee');
         $this->ur = $this->getContainer()->get('doctrine')->getRepository('FTFAttendeeBundle:User');
+        $this->er = $this->getContainer()->get('doctrine')->getRepository('FTFAttendeeBundle:Event');
         $this->loadAttendeeFromCsv($output);
     }
 
@@ -43,7 +45,8 @@ class AttendeeCommand extends ContainerAwareCommand
     {
         $count = 0;
         $first_line = true;
-        if (($handle = fopen('https://www.amiando.com/ftf2012/reports/twitter_handles.csv?security=oBdSONjFgL', "r")) !== FALSE) {
+        $event = $this->er->findOneByName('FTF 2012');
+        if (($handle = fopen($event->getAmiandosecret(), "r")) !== FALSE) {
             $this->ar->clear();
             while (($data = fgetcsv($handle, 1000, ";") ) !== FALSE) {
                 if($first_line){
@@ -56,6 +59,7 @@ class AttendeeCommand extends ContainerAwareCommand
                     
                     $user = $this->ur->findOneByTwitter($user->getTwitter());
                     $att = new Attendee();
+                    $att->setEvent($event);
                     if($user){
                         $att->setUser($user);
                     }else{

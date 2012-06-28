@@ -1,6 +1,10 @@
 body { padding-top: 60px; }
 .navbar form{ margin: 5px 0px 0px 0px; }
 .navbar form .control-group{ margin: 0px; } 
+
+.span2{ position: relative; }
 .span2 img{ width: 100%; }
+.span2 .label{ position:absolute; top: -8px; right: -8px; }
+
 footer{ background-color: black; color: white; padding: 10px 0px; }
 .brand small{ font-size: 60%; }

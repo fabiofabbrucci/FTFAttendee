@@ -28,6 +28,12 @@ class Organizator
     private $user;
     
     /**
+     * @ORM\ManyToOne(targetEntity="Event")
+     * @ORM\JoinColumn(name="event_id", referencedColumnName="id")
+     */
+    private $event;
+    
+    /**
      * Get id
      *
      * @return integer 
@@ -37,9 +43,14 @@ class Organizator
         return $this->id;
     }
     
-    public function setuser(User $user)
+    public function setUser(User $user)
     {
         $this->user = $user;
+    }
+    
+    public function setEvent(Event $event)
+    {
+        $this->event = $event;
     }
     
     public function getName()
@@ -60,5 +71,10 @@ class Organizator
     public function getTwitterid()
     {
         return $this->user->getTwitterid();
+    }
+    
+    public function getRole()
+    {
+        return 'Organizator';
     }
 }

@@ -3,6 +3,7 @@
 namespace FTF\AttendeeBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * AttendeeRepository
@@ -16,5 +17,18 @@ class AttendeeRepository extends EntityRepository
     {
         $query = $this->_em->createQuery('DELETE FTF\AttendeeBundle\Entity\Attendee');
         $query->execute();
+    }
+    
+    public function findAllByTwitteridAndEvent($ids,$event)
+    {
+        $qb = $this->createQueryBuilder('a')
+                ->where("a.event = :eventid")
+                ->join('a.user', 'u')
+                ->setParameter('eventid', $event->getId());
+        if ($ids) {
+            $qb->andWhere($qb->expr()->in('u.twitterid', $ids));
+        }
+        
+        return $qb->getQuery()->getResult();
     }
 }

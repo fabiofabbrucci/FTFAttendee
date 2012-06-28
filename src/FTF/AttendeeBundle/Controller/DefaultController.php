@@ -22,8 +22,10 @@ class DefaultController extends Controller
         }
 
         $em = $this->getDoctrine()->getEntityManager();
+        $event = $em->getRepository('FTFAttendeeBundle:Event')
+                ->findOneByName('FTF 2012');
         $attendees = $em->getRepository('FTFAttendeeBundle:Attendee')
-                ->findAll();
+                ->findByEvent($event->getId());
         return array('attendees' => $attendees);
     }
 
@@ -63,8 +65,10 @@ class DefaultController extends Controller
         $all = array_unique(array_merge($followers, $friends));
         
         $em = $this->getDoctrine()->getEntityManager();
+        $event = $em->getRepository('FTFAttendeeBundle:Event')
+                ->findOneByName('FTF 2012');
         $attendees = $em->getRepository('FTFAttendeeBundle:Attendee')
-                ->findByTwitterid($all);
+                ->findAllByTwitteridAndEvent($all, $event);
         return array(
             'attendees' => $attendees,
             'username' => $username,

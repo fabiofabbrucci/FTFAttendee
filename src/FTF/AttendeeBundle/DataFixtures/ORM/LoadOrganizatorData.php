@@ -24,7 +24,8 @@ class LoadOrganizatorData extends AbstractFixture implements OrderedFixtureInter
         foreach($organizers as $organizer)
         {
             $org = new Organizator();
-            $org->setuser($this->getReference($organizer));
+            $org->setUser($this->getReference($organizer));
+            $org->setEvent($this->getReference('ftf2012'));
             $manager->persist($org);
         }
         
@@ -38,6 +39,6 @@ class LoadOrganizatorData extends AbstractFixture implements OrderedFixtureInter
      */
     public function getOrder()
     {
-        return 2;
+        return 3;
     }
 }

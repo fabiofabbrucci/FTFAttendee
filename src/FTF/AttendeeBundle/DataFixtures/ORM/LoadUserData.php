@@ -48,7 +48,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
         $angelini = new User();
         $angelini->setName('Marco');
         $angelini->setSurname('Angelini');
-        $angelini->setTwitter('marcoangelini');
+        $angelini->setTwitter('jurgzs');
         $angelini->loadTwitterid();
         $manager->persist($angelini);
         
@@ -78,6 +78,6 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
      */
     public function getOrder()
     {
-        return 1;
+        return 2;
     }
 }
