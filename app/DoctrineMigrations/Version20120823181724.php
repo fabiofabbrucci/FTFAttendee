@@ -8,7 +8,7 @@ use Doctrine\DBAL\Migrations\AbstractMigration,
 /**
  * Auto-generated Migration: Please modify to your need!
  */
-class Version20120628094531 extends AbstractMigration
+class Version20120823181724 extends AbstractMigration
 {
     public function up(Schema $schema)
     {
@@ -17,6 +17,7 @@ class Version20120628094531 extends AbstractMigration
         
         $this->addSql("CREATE TABLE Organizator (id INT AUTO_INCREMENT NOT NULL, user_id INT DEFAULT NULL, event_id INT DEFAULT NULL, INDEX IDX_33D4E3FEA76ED395 (user_id), INDEX IDX_33D4E3FE71F7E88B (event_id), PRIMARY KEY(id)) ENGINE = InnoDB");
         $this->addSql("CREATE TABLE User (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(255) NOT NULL, surname VARCHAR(255) NOT NULL, twitter VARCHAR(255) NOT NULL, twitterid VARCHAR(255) NOT NULL, UNIQUE INDEX UNIQ_2DA17977166A7BB6 (twitter), PRIMARY KEY(id)) ENGINE = InnoDB");
+        $this->addSql("CREATE TABLE Event (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(255) NOT NULL, date DATE DEFAULT NULL, amiandosecret VARCHAR(255) NOT NULL, PRIMARY KEY(id)) ENGINE = InnoDB");
         $this->addSql("CREATE TABLE Attendee (id INT AUTO_INCREMENT NOT NULL, user_id INT DEFAULT NULL, event_id INT DEFAULT NULL, INDEX IDX_E826B731A76ED395 (user_id), INDEX IDX_E826B73171F7E88B (event_id), PRIMARY KEY(id)) ENGINE = InnoDB");
         $this->addSql("CREATE TABLE Speaker (id INT AUTO_INCREMENT NOT NULL, user_id INT DEFAULT NULL, event_id INT DEFAULT NULL, INDEX IDX_B438E2FDA76ED395 (user_id), INDEX IDX_B438E2FD71F7E88B (event_id), PRIMARY KEY(id)) ENGINE = InnoDB");
         $this->addSql("ALTER TABLE Organizator ADD CONSTRAINT FK_33D4E3FEA76ED395 FOREIGN KEY (user_id) REFERENCES User(id)");
@@ -35,8 +36,12 @@ class Version20120628094531 extends AbstractMigration
         $this->addSql("ALTER TABLE Organizator DROP FOREIGN KEY FK_33D4E3FEA76ED395");
         $this->addSql("ALTER TABLE Attendee DROP FOREIGN KEY FK_E826B731A76ED395");
         $this->addSql("ALTER TABLE Speaker DROP FOREIGN KEY FK_B438E2FDA76ED395");
+        $this->addSql("ALTER TABLE Organizator DROP FOREIGN KEY FK_33D4E3FE71F7E88B");
+        $this->addSql("ALTER TABLE Attendee DROP FOREIGN KEY FK_E826B73171F7E88B");
+        $this->addSql("ALTER TABLE Speaker DROP FOREIGN KEY FK_B438E2FD71F7E88B");
         $this->addSql("DROP TABLE Organizator");
         $this->addSql("DROP TABLE User");
+        $this->addSql("DROP TABLE Event");
         $this->addSql("DROP TABLE Attendee");
         $this->addSql("DROP TABLE Speaker");
     }
