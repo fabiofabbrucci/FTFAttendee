@@ -10,57 +10,88 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
 {
     public function load(ObjectManager $manager)
     {
-        $fabbrucci = new User();
-        $fabbrucci->setName('Fabio');
-        $fabbrucci->setSurname('Fabbrucci');
-        $fabbrucci->setTwitter('Fabbrucci');
-        $manager->persist($fabbrucci);
+        $users = array(
+            array(
+                'twitter' => 'Fabbrucci',
+                'name' => 'Fabio',
+                'surname' => 'Fabbrucci'),
+            array(
+                'twitter' => 'LucaSalvini',
+                'name' => 'Luca',
+                'surname' => 'Salvini'),
+            array(
+                'twitter' => 'anSeamRock',
+                'name' => 'Rocco',
+                'surname' => 'Curcio'),
+            array(
+                'twitter' => 'dieSignIt',
+                'name' => 'Diego',
+                'surname' => 'Sessa'),
+            array(
+                'twitter' => 'cedmax',
+                'name' => 'Marco',
+                'surname' => 'Cedaro'),
+            array(
+                'twitter' => 'jurgzs',
+                'name' => 'Marco',
+                'surname' => 'Angelini'),
+            array(
+                'twitter' => 'erodrix',
+                'name' => 'Emanuele',
+                'surname' => 'Rodriguez'),
+            array(
+                'twitter' => 'jaffathecake',
+                'name' => 'Jake',
+                'surname' => 'Archibald'),
+            array(
+                'twitter' => 'aral',
+                'name' => 'Aral',
+                'surname' => 'Balkan'),
+            array(
+                'twitter' => 'blaine',
+                'name' => 'Blaine',
+                'surname' => 'Cook'),
+            array(
+                'twitter' => 'denisejacobs',
+                'name' => 'Denise',
+                'surname' => 'Jacobs'),
+            array(
+                'twitter' => 'ppk',
+                'name' => 'Peter-Paul',
+                'surname' => 'Koch'),
+            array(
+                'twitter' => 'skrug',
+                'name' => 'Steve',
+                'surname' => 'Krug'),
+            array(
+                'twitter' => 'mishunov',
+                'name' => 'Denys',
+                'surname' => 'Mishunov'),
+            array(
+                'twitter' => 'hyper_linda',
+                'name' => 'Linda',
+                'surname' => 'Sandvik'),
+            array(
+                'twitter' => 'rem',
+                'name' => 'Remy',
+                'surname' => 'Sharp'),
+            array(
+                'twitter' => 'snookca',
+                'name' => 'Jonathan',
+                'surname' => 'Snook'),
+        );
         
-        $salvini = new User();
-        $salvini->setName('Luca');
-        $salvini->setSurname('Salvini');
-        $salvini->setTwitter('LucaSalvini');
-        $manager->persist($salvini);
-        
-        $curcio = new User();
-        $curcio->setName('Rocco');
-        $curcio->setSurname('Curcio');
-        $curcio->setTwitter('anSeamRock');
-        $manager->persist($curcio);
-        
-        $sessa = new User();
-        $sessa->setName('Diego');
-        $sessa->setSurname('Sessa');
-        $sessa->setTwitter('dieSignIt');
-        $manager->persist($sessa);
-        
-        $cedaro = new User();
-        $cedaro->setName('Marco');
-        $cedaro->setSurname('Cedaro');
-        $cedaro->setTwitter('cedmax');
-        $manager->persist($cedaro);
-        
-        $angelini = new User();
-        $angelini->setName('Marco');
-        $angelini->setSurname('Angelini');
-        $angelini->setTwitter('jurgzs');
-        $manager->persist($angelini);
-        
-        $rodriguez = new User();
-        $rodriguez->setName('Emanuele');
-        $rodriguez->setSurname('Rodriguez');
-        $rodriguez->setTwitter('erodrix');
-        $manager->persist($rodriguez);
+        foreach($users as $user){
+            $us = $user['twitter'];
+            $$us = new User();
+            $$us->setName($user['name']);
+            $$us->setSurname($user['surname']);
+            $$us->setTwitter($us);
+            $manager->persist($$us);
+            $this->addReference($us, $$us);
+        }
         
         $manager->flush();
-        
-        $this->addReference('fabbrucci', $fabbrucci);
-        $this->addReference('salvini', $salvini);
-        $this->addReference('curcio', $curcio);
-        $this->addReference('sessa', $sessa);
-        $this->addReference('cedaro', $cedaro);
-        $this->addReference('angelini', $angelini);
-        $this->addReference('rodriguez', $rodriguez);
         
     }
     

@@ -28,7 +28,9 @@ class DefaultController extends Controller
                 ->findByEvent($event->getId());
         $organizators = $em->getRepository('FTFAttendeeBundle:Organizator')
                 ->findByEvent($event->getId());
-        $users = array_merge($attendees, $organizators);
+        $speakers = $em->getRepository('FTFAttendeeBundle:Speaker')
+                ->findByEvent($event->getId());
+        $users = array_merge($attendees, $organizators, $speakers);
         shuffle($users);
         return array('attendees' => $users);
     }

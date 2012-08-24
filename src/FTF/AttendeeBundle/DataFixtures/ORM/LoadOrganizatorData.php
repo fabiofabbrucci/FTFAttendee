@@ -12,13 +12,13 @@ class LoadOrganizatorData extends AbstractFixture implements OrderedFixtureInter
     public function load(ObjectManager $manager)
     {
         $organizers = array(
-            'fabbrucci',
-            'salvini',
-            'curcio', 
-            'sessa', 
-            'cedaro', 
-            'angelini', 
-            'rodriguez', 
+            'Fabbrucci',
+            'LucaSalvini',
+            'anSeamRock', 
+            'dieSignIt', 
+            'cedmax', 
+            'jurgzs', 
+            'erodrix', 
         );
         
         foreach($organizers as $organizer)
