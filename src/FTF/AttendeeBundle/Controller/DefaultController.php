@@ -31,7 +31,12 @@ class DefaultController extends Controller
         $speakers = $em->getRepository('FTFAttendeeBundle:Speaker')
                 ->findByEvent($event->getId());
         $users = array_merge($attendees, $organizators, $speakers);
-        shuffle($users);
+        
+        usort($users, function ($a, $b){
+            return strcmp(strtolower($a->getTwitter()), strtolower($b->getTwitter()));
+        });
+        
+        //shuffle($users);
         return array('attendees' => $users);
     }
 
@@ -75,6 +80,16 @@ class DefaultController extends Controller
                 ->findOneByName('FTF 2012');
         $attendees = $em->getRepository('FTFAttendeeBundle:Attendee')
                 ->findAllByTwitteridAndEvent($all, $event);
+        $organizators = $em->getRepository('FTFAttendeeBundle:Organizator')
+                ->findAllByTwitteridAndEvent($all, $event);
+        $speakers = $em->getRepository('FTFAttendeeBundle:Speaker')
+                ->findAllByTwitteridAndEvent($all, $event);
+        $users = array_merge($attendees, $organizators, $speakers);
+        
+        usort($users, function ($a, $b){
+            return strcmp(strtolower($a->getTwitter()), strtolower($b->getTwitter()));
+        });
+        
         return array(
             'attendees' => $attendees,
             'username' => $username,
