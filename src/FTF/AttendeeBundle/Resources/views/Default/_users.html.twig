@@ -4,8 +4,8 @@
             <a class="avatar external" href="http://twitter.com/{{ user.twitter }}">
                     <img class="avatar" src="http://api.twitter.com/1/users/profile_image?screen_name={{ user.twitter }}&size=bigger">
             </a>
-            <span class="handle">@{{ user.twitter }}</span>
-            <span class="name">{{ user.name }} {{ user.surname }}</span>
+            <a class="name external" href="http://www.twitter.com/{{ user.twitter }}" title="{{ user.name }} {{ user.surname }}">{{ user.name }} {{ user.surname }}</a>
+            <span class="handle" title="@{{ user.twitter }}">@{{ user.twitter }}</span>
     </li>
 {% endfor %}
 </ul>
