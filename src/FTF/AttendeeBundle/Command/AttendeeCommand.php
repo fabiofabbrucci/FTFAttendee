@@ -54,34 +54,30 @@ class AttendeeCommand extends ContainerAwareCommand
                     continue;
                 }
                 if (strlen($data[3]) and $count < 1000) {
-                    $user = new User();
-                    $user->setTwitter($data[3]);
+                    $twitter = trim($data[3]);
+                    $user = $this->ur->findOneByTwitter($twitter);
                     
-                    $user = $this->ur->findOneByTwitter($user->getTwitter());
                     if(!$user){
                         $user = new User();
                         $user->setName($data[0]);
                         $user->setSurname($data[1]);
-                        $user->setTwitter($data[3]);
-                        if($user->loadTwitterid()){
-                            $att->setUser($user);
-                            $this->em->persist($user);
-                        }else{
-                            $output->writeln("<warning>" . $user->getTwitter() . " is invalid<warning>");
-                            unset($user);
-                        }
+                        $twitter = $user->setTwitter($twitter);
+                        $this->em->persist($user);
+                    }else{
+                        $twitter = $user->getTwitter();
                     }
+                    
                     if(isset($user)){
                         $att = new Attendee();
                         $att->setUser($user);
                         $att->setEvent($event);
                         $this->em->persist($att);
+                        $this->em->flush();
                     }
                     $count++;
-                    $output->writeln("<info>$count) " . $data[3] . "</info>");
+                    $output->writeln("<info>$count) " . $twitter . "</info>");
                 }
             }
-            $this->em->flush();
             $output->writeln("<info>loaded $count users</info>");
         }
     }

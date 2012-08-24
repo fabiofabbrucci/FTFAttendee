@@ -26,7 +26,11 @@ class DefaultController extends Controller
                 ->findOneByName('FTF 2012');
         $attendees = $em->getRepository('FTFAttendeeBundle:Attendee')
                 ->findByEvent($event->getId());
-        return array('attendees' => $attendees);
+        $organizators = $em->getRepository('FTFAttendeeBundle:Organizator')
+                ->findByEvent($event->getId());
+        $users = array_merge($attendees, $organizators);
+        shuffle($users);
+        return array('attendees' => $users);
     }
 
     private function getFollowers($username)

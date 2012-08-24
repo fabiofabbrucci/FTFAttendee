@@ -5,10 +5,10 @@
             <div class="span2">
                 {% if user.role == "speaker" %}
                     <span class="label label-warning">{{ user.role }}</span>
-                {% elseif user.role == "organizer" %}
-                    <span class="label label-info">{{ user.role }}</span>
-                {% else %}
+                {% elseif user.role == "Organizator" %}
                     <span class="label">{{ user.role }}</span>
+                {% else %}
+                    <span class="label label-info">{{ user.role }}</span>
                 {% endif %}
                 <a href="http://twitter.com/{{ user.twitter }}" class="thumbnail well" target="_blank">
                     <img src="http://api.twitter.com/1/users/profile_image?screen_name={{ user.twitter }}&size=bigger" />

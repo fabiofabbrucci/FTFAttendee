@@ -3,6 +3,8 @@
 namespace FTF\AttendeeBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use FTF\AttendeeBundle\Entity\Event;
+use FTF\AttendeeBundle\Entity\Attendee;
 
 /**
  * FTF\AttendeeBundle\Entity\User
@@ -46,7 +48,7 @@ class User
     /**
      * @var string $twitterid
      *
-     * @ORM\Column(name="twitterid", type="string", length=255)
+     * @ORM\Column(name="twitterid", type="string", length=255, unique=true, nullable=true)
      */
     private $twitterid;
     
@@ -111,6 +113,7 @@ class User
             $twitter = substr($twitter, 1);
         }
         $this->twitter = $twitter;
+        return $twitter;
     }
     
     public function isTwitterAccountValid()
@@ -150,7 +153,7 @@ class User
         return $this->twitterid;
     }
     
-    public function loadTwitterid()
+    public function getTwitteridFromTwitter()
     {
         if($this->isTwitterAccountValid())
         {
@@ -161,10 +164,10 @@ class User
                 if(count($twitterUsers))
                 {
                     $twitterUser = $twitterUsers[0];
-                    $this->setTwitterid($twitterUser->id);
-                    return true;
+                    return ($twitterUser->id);
                 }
             }
+            return false;
         }
         return false;
     }
