@@ -58,11 +58,7 @@ class AttendeeCommand extends ContainerAwareCommand
                     $user->setTwitter($data[3]);
                     
                     $user = $this->ur->findOneByTwitter($user->getTwitter());
-                    $att = new Attendee();
-                    $att->setEvent($event);
-                    if($user){
-                        $att->setUser($user);
-                    }else{
+                    if(!$user){
                         $user = new User();
                         $user->setName($data[0]);
                         $user->setSurname($data[1]);
@@ -70,11 +66,19 @@ class AttendeeCommand extends ContainerAwareCommand
                         if($user->loadTwitterid()){
                             $att->setUser($user);
                             $this->em->persist($user);
+                        }else{
+                            $output->writeln("<warning>" . $user->getTwitter() . " is invalid<warning>");
+                            unset($user);
                         }
                     }
-                    $this->em->persist($att);
+                    if(isset($user)){
+                        $att = new Attendee();
+                        $att->setUser($user);
+                        $att->setEvent($event);
+                        $this->em->persist($att);
+                    }
                     $count++;
-                    $output->writeln("<info>$count) " . $user->getTwitter() . "</info>");
+                    $output->writeln("<info>$count) " . $data[3] . "</info>");
                 }
             }
             $this->em->flush();
