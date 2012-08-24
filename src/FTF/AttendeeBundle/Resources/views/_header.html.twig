@@ -1,0 +1,28 @@
+<input type="checkbox" name="stopAnim" id="stopAnim">
+<header class="s-header" role="banner">
+
+        <div id="clouds">
+                <span class="cloud c1"></span>
+                <span class="cloud c2"></span>
+                <span class="cloud c3"></span>
+        </div>
+
+        <div id="treasure">
+                {% image '@FTFAttendeeBundle/Resources/public/images/int/hdr_logo_tofel.png' %}
+                    <img src="{{ asset_url }}" itemprop="image" alt="The Treasure of FrontEnd Island - Front End Conference" />
+                {% endimage %}
+                <div itemprop="summary" class="summary">The Treasure of FrontEnd Island</div>
+                <h1 itemprop="eventType" class="eventType">Front End Conference</h1>
+        </div>
+
+        <nav role="navigation" class="n-main">
+                <a class="nav-title" href="#">Menu</a>
+                <ul class="nav-list">
+                        <li class="nav-item"><a href="index.html">Home</a></li>
+                        <li class="nav-item"><a href="speakers.html">Speakers</a></li>
+                        <li class="nav-item"><a href="workshops.html">Workshops</a></li>
+                        <li class="nav-item"><a href="hotels.html">Accommodation</a></li>
+                </ul>
+        </nav>
+
+</header>

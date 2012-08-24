@@ -12,4 +12,16 @@ use Doctrine\ORM\EntityRepository;
  */
 class OrganizatorRepository extends EntityRepository
 {
+    public function findAllByTwitteridAndEvent($ids,$event)
+    {
+        $qb = $this->createQueryBuilder('o')
+                ->where("o.event = :eventid")
+                ->join('o.user', 'u')
+                ->setParameter('eventid', $event->getId());
+        if ($ids) {
+            $qb->andWhere($qb->expr()->in('u.twitterid', $ids));
+        }
+        
+        return $qb->getQuery()->getResult();
+    }
 }

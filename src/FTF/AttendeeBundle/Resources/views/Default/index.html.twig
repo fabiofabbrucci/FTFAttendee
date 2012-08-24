@@ -1,7 +1,18 @@
 {% extends 'FTFAttendeeBundle::layout.html.twig' %}
 
 {%block content %}
-    {% include 'FTFAttendeeBundle:Default:_users.html.twig' %}
+    <div class="m-title">
+        <h1 class="title friends">Find your friends</h1>
+    </div>
+
+    <div class="m-friends">
+        <h2 class="title">Lorem ipsum titulum sit amet</h2>
+        <div class="intro">
+                <p>Testo introduttivo friends finder bla bla bla.</p>
+        </div>
+        {% include 'FTFAttendeeBundle:Default:_users.html.twig' %}
+        {% include 'FTFAttendeeBundle::_form.html.twig' %}
+    </div>
 {% endblock %}
             
 {% block enum %}
