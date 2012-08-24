@@ -161,10 +161,12 @@ namespace :database do
       upload(file, "/tmp/#{filename}", :via => :scp)
       run "gunzip -c /tmp/#{filename} > /tmp/#{sqlfile}"
 
-      run "cat #{shared_path}/config/databases.yml" do |ch, st, data|
+      run "cat #{shared_path}/app/config/databases.yml" do |ch, st, data|
         config = load_database_config data, symfony_env_prod
       end
-
+      
+      puts config
+      
       case config['database_driver']
       when 'pdo_mysql'
         run "mysql -u#{config['database_user']} --password='#{config['database_password']}' #{config['database_name']} < /tmp/#{sqlfile}" do |ch, stream, data|

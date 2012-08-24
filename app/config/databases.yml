@@ -1,0 +1,7 @@
+base:
+    database_driver: "pdo_mysql"
+    database_host: "localhost"
+    database_port: ""
+    database_name: "ftfattendee"
+    database_user: "ftf_user"
+    database_password: "cappellaio"
