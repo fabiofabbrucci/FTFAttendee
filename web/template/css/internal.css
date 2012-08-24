@@ -1,7 +1,20 @@
-@import url(http://fonts.googleapis.com/css?family=Asap:400,700);
 /* ==|== Frontend Island styles =============================================
    Author: Emanuele Rodriguez <me@erodri.com>
    ========================================================================== */
+@font-face {
+  font-family: 'Asap';
+  font-style: normal;
+  font-weight: 400;
+  src: local("Asap"), local("Asap-Regular"), url(http://themes.googleusercontent.com/static/fonts/asap/v1/nvGvEwsMAvkIa6w2U-PXffesZW2xOQ-xsNqO47m55DA.woff) format("woff");
+}
+
+@font-face {
+  font-family: 'Asap';
+  font-style: normal;
+  font-weight: 700;
+  src: local("Asap Bold"), local("Asap-Bold"), url(http://themes.googleusercontent.com/static/fonts/asap/v1/QGN0GG0540fyG6NL_PpOpgLUuEpTyoUstqEm5AMlJo4.woff) format("woff");
+}
+
 @font-face {
   font-family: 'CaslonAntiqueRegular';
   src: url("cas_antn-webfont.eot");
@@ -56,14 +69,14 @@ body {
 }
 
 ::-moz-selection {
-  background: #fe57a1;
-  color: #fff;
+  background: #c1e2e8;
+  color: black;
   text-shadow: none;
 }
 
 ::selection {
-  background: #fe57a1;
-  color: #fff;
+  background: #c1e2e8;
+  color: black;
   text-shadow: none;
 }
 
@@ -465,40 +478,124 @@ select {
 }
 
 .m-friends {
-  color: #4b4a4a;
+  margin-bottom: 2em;
+  text-align: center;
 }
 .m-friends > .title {
   font-size: 1.1em;
   margin: 2em 0 .5em;
+  text-align: left;
 }
 .m-friends .intro {
   padding: 1em 0;
+  text-align: left;
 }
 .m-friends .friends {
   margin: 0 -10px;
 }
 .m-friends .friend {
   display: inline-block;
-  margin: 0 5px 20px 10px;
+  margin: 0 0 20px 10px;
+  text-align: left;
+  vertical-align: top;
+  width: 90px;
 }
 .m-friends .avatar {
   -moz-border-radius: 0.5em;
   -webkit-border-radius: 0.5em;
   -ms-border-radius: 0.5em;
   border-radius: 0.5em;
-  width: 100px;
+  width: 100%;
+}
+.m-friends .avatar:hover {
+  transform: translate(0, -5px);
+  transition: transform .5s ease-in-out;
 }
 .m-friends .handle,
 .m-friends .name {
+  font-size: .8em;
+  max-width: 100px;
+  overflow: hidden;
+  padding-top: .2em;
+  text-overflow: ellipsis;
+}
+.m-friends .name {
+  color: #4b4a4a;
+  display: block;
+  font-weight: bold;
+}
+.m-friends .name:hover {
+  border-bottom: none;
+  text-decoration: underline;
+}
+.m-friends .handle {
+  color: #8ed0e2;
   display: block;
 }
 .m-friends .user {
-  margin: 2em auto 3em;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -ms-border-radius: 5px;
+  border-radius: 5px;
+  margin: 1em auto 2em;
+  overflow: hidden;
   text-align: center;
 }
 .m-friends .user input,
 .m-friends .user button {
-  font-size: 1.6em;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -ms-border-radius: 5px;
+  border-radius: 5px;
+  border: none;
+  margin: 0 0 1em 0;
+}
+.m-friends .user input {
+  background-color: #ececec;
+  border: 1px solid #959595;
+  font-size: 1em;
+  height: 1.2em;
+  min-width: 210px;
+  padding: .9em 5em .9em 1em;
+  vertical-align: top;
+  width: 30%;
+}
+.m-friends .user button {
+  background-color: #8ed0e2;
+  color: white;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 1.1em;
+  height: 2.9em;
+  padding: .8em;
+  text-transform: uppercase;
+  vertical-align: top;
+}
+.m-friends .user button:hover, .m-friends .user button:active {
+  background-color: #1d7f9a;
+  cursor: pointer;
+}
+@media only screen and (min-width: 600px) {
+  .m-friends .friend {
+    margin-right: 5px;
+    margin-left: 10px;
+    width: 100px;
+  }
+  .m-friends .user {
+    background-color: #ececec;
+    border: 1px solid #959595;
+    display: inline-block;
+    margin-bottom: 3em;
+  }
+  .m-friends .user input {
+    border: none;
+    float: left;
+    margin-bottom: 0;
+  }
+  .m-friends .user button {
+    border-left: none;
+    float: right;
+    margin-bottom: 0;
+  }
 }
 
 .m-map .intro {
