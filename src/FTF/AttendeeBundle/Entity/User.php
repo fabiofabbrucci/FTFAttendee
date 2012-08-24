@@ -154,14 +154,23 @@ class User
     {
         if($this->isTwitterAccountValid())
         {
-            $twitterUsers = json_decode(file_get_contents('https://api.twitter.com/1/users/lookup.json?screen_name=' . $this->getTwitter()));
-            if(count($twitterUsers))
-            {
-                $twitterUser = $twitterUsers[0];
-                $this->setTwitterid($twitterUser->id);
-                return true;
+            $url = 'https://api.twitter.com/1/users/lookup.json?screen_name=' . $this->getTwitter();
+            if($this->get_http_response_code($url)!="404"){
+                $content = file_get_contents($url);
+                $twitterUsers = json_decode($content);
+                if(count($twitterUsers))
+                {
+                    $twitterUser = $twitterUsers[0];
+                    $this->setTwitterid($twitterUser->id);
+                    return true;
+                }
             }
         }
         return false;
+    }
+    
+    private function get_http_response_code($url) {
+        $headers = get_headers($url);
+        return substr($headers[0], 9, 3);
     }
 }
