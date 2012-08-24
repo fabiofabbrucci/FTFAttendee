@@ -155,7 +155,7 @@ class User
         if($this->isTwitterAccountValid())
         {
             $url = 'https://api.twitter.com/1/users/lookup.json?screen_name=' . $this->getTwitter();
-            if(!in_array($this->get_http_response_code($url),array("404", "400")){
+            if(!in_array($this->get_http_response_code($url),array("404", "400"))){
                 $content = file_get_contents($url);
                 $twitterUsers = json_decode($content);
                 if(count($twitterUsers))
