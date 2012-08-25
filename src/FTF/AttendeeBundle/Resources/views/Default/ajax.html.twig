@@ -9,6 +9,9 @@
         </div>
 
         <div class="m-friends">
+            {% if not registered %}
+                <a href="#">Vai al carrello</a>
+            {% endif %}
             {% include 'FTFAttendeeBundle:Default:_users.html.twig' %}
             {% include 'FTFAttendeeBundle::_form.html.twig' %}
         </div>

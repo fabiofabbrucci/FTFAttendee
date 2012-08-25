@@ -18,6 +18,9 @@ class DefaultController extends Controller
     {
         $request = $this->getRequest();
         if($username = $request->get('username')){
+            if(substr($username, 0, 1) == '@'){
+                $username = substr($username, 1);
+            }
             return $this->redirect($this->generateUrl('search', array('username' => $username)));
         }
 
@@ -78,6 +81,9 @@ class DefaultController extends Controller
      */
     public function ajaxAction($username)
     {
+        if(substr($username, 0, 1) == '@'){
+            $username = substr($username, 1);
+        }
         $followers = $this->getFollowers($username);
         $friends = $this->getFriends($username);
         if($followers == false or $friends == false){
@@ -104,9 +110,12 @@ class DefaultController extends Controller
             return strcmp(strtolower($a->getTwitter()), strtolower($b->getTwitter()));
         });
         
+        $user = $em->getRepository('FTFAttendeeBundle:User')->findOneByTwitter($username);
+        
         return array(
             'attendees' => $users,
             'username' => $username,
+            'registered' => (bool)$user,
             'error' => false
         );
     }
