@@ -48,6 +48,7 @@ class AttendeeCommand extends ContainerAwareCommand
         $event = $this->er->findOneByName('FTF 2012');
         if (($handle = fopen($event->getAmiandosecret(), "r")) !== FALSE) {
             $this->ar->clear();
+            $stack_account = array();
             while (($data = fgetcsv($handle, 1000, ";") ) !== FALSE) {
                 if($first_line){
                     $first_line = !$first_line;
@@ -55,8 +56,15 @@ class AttendeeCommand extends ContainerAwareCommand
                 }
                 if (strlen($data[3]) and $count < 1000) {
                     $twitter = trim($data[3]);
+                    if(substr($twitter, 0, 1) == '@'){
+                        $twitter = substr($twitter, 1);
+                    }
+                    if(in_array($twitter, $stack_account)){
+                        continue;
+                    }else{
+                        $stack_account[] = $twitter;
+                    }
                     $user = $this->ur->findOneByTwitter($twitter);
-                    
                     if(!$user){
                         $user = new User();
                         $user->setName($data[0]);

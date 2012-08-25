@@ -1,10 +1,17 @@
 {%block content %}
-    <div class="m-title">
-        <h1 class="title friends">Friends and Followers of @{{ username }} at From the Front 2012 </h1>
-    </div>
+    {% if error %}
+        <div class="m-title">
+            <h1 class="title friends">Sorry. We reached the limit of request for twitter. Please try again in 1 hour.</h1>
+        </div>
+    {% else %}
+        <div class="m-title">
+            <h1 class="title friends">Friends and Followers of @{{ username }} at From the Front 2012 </h1>
+        </div>
 
-    <div class="m-friends">
-        {% include 'FTFAttendeeBundle:Default:_users.html.twig' %}
-        {% include 'FTFAttendeeBundle::_form.html.twig' %}
-    </div>
+        <div class="m-friends">
+            {% include 'FTFAttendeeBundle:Default:_users.html.twig' %}
+            {% include 'FTFAttendeeBundle::_form.html.twig' %}
+        </div>
+    {% endif %}
+    
 {% endblock %}

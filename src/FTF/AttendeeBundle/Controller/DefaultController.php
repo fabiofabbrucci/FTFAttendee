@@ -42,14 +42,22 @@ class DefaultController extends Controller
 
     private function getFollowers($username)
     {
-        $followers = json_decode(file_get_contents('https://api.twitter.com/1/followers/ids.json?screen_name=' . $username));
-        return $followers->ids;
+        if($content = file_get_contents('https://api.twitter.com/1/followers/ids.json?screen_name=' . $username)) {
+            $followers = json_decode($content);
+            return $followers->ids;
+        }else{
+            return false;
+        }
     }                
     
     private function getFriends($username)
     {
-        $followers = json_decode(file_get_contents('https://api.twitter.com/1/friends/ids.json?screen_name=' . $username));
-        return $followers->ids;
+        if($content = file_get_contents('https://api.twitter.com/1/friends/ids.json?screen_name=' . $username)) {
+            $followers = json_decode($content);
+            return $followers->ids;
+        }else{
+            return false;
+        }
     }                
     
     /**
@@ -72,6 +80,13 @@ class DefaultController extends Controller
     {
         $followers = $this->getFollowers($username);
         $friends = $this->getFriends($username);
+        if($followers == false or $friends == false){
+            return array(
+                'attendees' => array(),
+                'username' => $username,
+                'error' => true
+            );
+        }
         
         $all = array_unique(array_merge($followers, $friends));
         
@@ -85,14 +100,14 @@ class DefaultController extends Controller
         $speakers = $em->getRepository('FTFAttendeeBundle:Speaker')
                 ->findAllByTwitteridAndEvent($all, $event);
         $users = array_merge($attendees, $organizators, $speakers);
-        
         usort($users, function ($a, $b){
             return strcmp(strtolower($a->getTwitter()), strtolower($b->getTwitter()));
         });
         
         return array(
-            'attendees' => $attendees,
+            'attendees' => $users,
             'username' => $username,
+            'error' => false
         );
     }
 }
