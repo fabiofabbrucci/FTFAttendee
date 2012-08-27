@@ -77,7 +77,6 @@ class DefaultController extends Controller
     /**
      * @Route("/ajax/search/{username}", name="ajax")
      * @Template()
-     * @Cache(expires="tomorrow")
      */
     public function ajaxAction($username)
     {
@@ -112,11 +111,16 @@ class DefaultController extends Controller
         
         $user = $em->getRepository('FTFAttendeeBundle:User')->findOneByTwitter($username);
         
-        return array(
+        $param = array(
             'attendees' => $users,
             'username' => $username,
             'registered' => (bool)$user,
             'error' => false
         );
+        
+        $response = $this->render('FTFAttendeeBundle:Default:ajax.html.twig', $param);
+        $response->setSharedMaxAge(60*60*24);
+
+        return $response;
     }
 }
