@@ -16,14 +16,6 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        $request = $this->getRequest();
-        if($username = $request->get('username')){
-            if(substr($username, 0, 1) == '@'){
-                $username = substr($username, 1);
-            }
-            return $this->redirect($this->generateUrl('search', array('username' => $username)));
-        }
-
         $em = $this->getDoctrine()->getEntityManager();
         $event = $em->getRepository('FTFAttendeeBundle:Event')
                 ->findOneByName('FTF 2012');

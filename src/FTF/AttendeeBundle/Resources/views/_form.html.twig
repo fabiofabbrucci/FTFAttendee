@@ -1,4 +1,11 @@
-<form class="user" method="post" action="{{ path('index') }}">
+<form id="search" class="user" method="post" action="{{ path('index') }}">
         <input type="text" name="username" id="handle" placeholder="this is my twitter id..." />
         <button type="submit">find my friend</button>
 </form>
+<script>
+    $(document).ready(function(){
+        $('form#search').submit(function(){
+            $('form#search').attr('action', $('form#search').attr('action') + 'search/' + $('#handle').val());
+        });
+    });
+</script>
