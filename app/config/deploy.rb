@@ -13,7 +13,7 @@ set :user,       "abmundic"
 set :scm_passphrase, ""
 ssh_options[:port] = 22123
 ssh_options[:forward_agent] = true
-set :deploy_to, "/var/www/vhosts/ftf.abmundi.com/httpdocs/"
+set :deploy_to, "/var/www/vhosts/ftf2012.abmundi.com/httpdocs/"
 
 set :model_manager, "doctrine"
 
