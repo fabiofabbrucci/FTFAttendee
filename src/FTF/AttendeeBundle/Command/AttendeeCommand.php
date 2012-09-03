@@ -59,6 +59,9 @@ class AttendeeCommand extends ContainerAwareCommand
                     if(substr($twitter, 0, 1) == '@'){
                         $twitter = substr($twitter, 1);
                     }
+                    if($twitter == 'matteo@matteobalocco.it'){
+                        $twitter = 'matteobalocco';
+                    }
                     if(in_array($twitter, $stack_account)){
                         continue;
                     }else{
