@@ -38,7 +38,6 @@ class AttendeeRepository extends EntityRepository
                 ->join('a.user', 'u')
                 ->where("a.event = :eventid")
                 ->andWhere("u.twitterid IS NOT NULL")
-                ->setMaxResults(1)
                 ->setParameter('eventid', $event->getId());
         
         return $qb->getQuery()->getResult();
