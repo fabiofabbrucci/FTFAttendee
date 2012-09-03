@@ -1,10 +1,26 @@
-body { padding-top: 60px; }
-.navbar form{ margin: 5px 0px 0px 0px; }
-.navbar form .control-group{ margin: 0px; } 
-
-.span2{ position: relative; }
-.span2 img{ width: 100%; }
-.span2 .label{ position:absolute; top: -8px; right: -8px; }
-
-footer{ background-color: black; color: white; padding: 10px 0px; }
-.brand small{ font-size: 60%; }
+.m-friends .friend {
+    position: relative;
+}
+.m-friends .role{
+    background-color: #cccccc;
+    color: #ffffff;
+    border-bottom-left-radius: 5px;
+    border-top-right-radius: 5px;
+    font-size: .8em;
+    padding: 2px 3px;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    width: 60%;
+    text-align: center;
+    display: block;
+}
+.m-friends .role_Speaker{
+    background-color: #0000ff;
+}
+.m-friends .role_Organizator{
+    background-color: #00ff00;
+}
+.m-friends .friend:hover .handle {
+  color: #333333; 
+}

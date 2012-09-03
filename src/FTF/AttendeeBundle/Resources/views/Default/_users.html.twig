@@ -1,11 +1,12 @@
 <ul class="friends">
 {% for user in attendees %}
     <li class="friend">
-            <a class="avatar external" href="http://twitter.com/{{ user.twitter }}">
-                    <img class="avatar" src="http://api.twitter.com/1/users/profile_image?screen_name={{ user.twitter }}&size=bigger">
-            </a>
-            <a class="name external" href="http://www.twitter.com/{{ user.twitter }}" title="{{ user.name }} {{ user.surname }}">{{ user.name }} {{ user.surname }}</a>
-            <span class="handle" title="@{{ user.twitter }}">@{{ user.twitter }}</span>
+        <span class="role role_{{ user.role }}">{{ user.role }}</span>
+        <a class="avatar external" href="http://twitter.com/{{ user.twitter }}">
+                <img class="avatar" src="http://api.twitter.com/1/users/profile_image?screen_name={{ user.twitter }}&size=bigger">
+        </a>
+        <a class="name external" href="http://www.twitter.com/{{ user.twitter }}" title="{{ user.name }} {{ user.surname }}">{{ user.name }} {{ user.surname }}</a>
+        <span class="handle" title="@{{ user.twitter }}">@{{ user.twitter }}</span>
     </li>
 {% endfor %}
 </ul>
