@@ -22,12 +22,24 @@ class AttendeeRepository extends EntityRepository
     public function findAllByTwitteridAndEvent($ids,$event)
     {
         $qb = $this->createQueryBuilder('a')
-                ->where("a.event = :eventid")
                 ->join('a.user', 'u')
+                ->where("a.event = :eventid")
+                ->andWhere("u.twitterid IS NOT NULL")
                 ->setParameter('eventid', $event->getId());
         if ($ids) {
             $qb->andWhere($qb->expr()->in('u.twitterid', $ids));
         }
+        
+        return $qb->getQuery()->getResult();
+    }
+    public function findByEvent($event)
+    {
+        $qb = $this->createQueryBuilder('a')
+                ->join('a.user', 'u')
+                ->where("a.event = :eventid")
+                ->andWhere("u.twitterid IS NOT NULL")
+                ->setMaxResults(1)
+                ->setParameter('eventid', $event->getId());
         
         return $qb->getQuery()->getResult();
     }

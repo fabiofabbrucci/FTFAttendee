@@ -20,7 +20,7 @@ class DefaultController extends Controller
         $event = $em->getRepository('FTFAttendeeBundle:Event')
                 ->findOneByName('FTF 2012');
         $attendees = $em->getRepository('FTFAttendeeBundle:Attendee')
-                ->findByEvent($event->getId());
+                ->findByEvent($event);
         $organizators = $em->getRepository('FTFAttendeeBundle:Organizator')
                 ->findByEvent($event->getId());
         $speakers = $em->getRepository('FTFAttendeeBundle:Speaker')
