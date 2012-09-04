@@ -1,7 +1,7 @@
 <ul class="friends">
 {% for user in attendees %}
     <li class="friend">
-        <span class="role role_{{ user.role }}">{{ user.role }}</span>
+        {#<span class="role role_{{ user.role }}">{{ user.role }}</span> #}
         <a class="avatar external" href="http://twitter.com/{{ user.twitter }}">
                 <img class="avatar" src="http://api.twitter.com/1/users/profile_image?screen_name={{ user.twitter }}&size=bigger">
         </a>
