@@ -12,6 +12,7 @@ class DefaultController extends Controller
 {
     /**
      * @Route("/", name="index")
+     * @Method("get")
      * @Template()
      */
     public function indexAction()
@@ -33,6 +34,23 @@ class DefaultController extends Controller
         
         //shuffle($users);
         return array('attendees' => $users);
+    }
+    
+    /**
+     * @Route("/", name="index_search")
+     * @Method("post")
+     */
+    public function indexSearchAction()
+    {
+        $request = $this->get('request');
+        $username = $request->request->get('username');
+        if($username){
+            return $this->redirect($this->generateUrl('search', array(
+                    'username' => $username,
+                )));
+        }else{
+            return $this->redirect($this->generateUrl('index'));   
+        }
     }
 
     private function getFollowers($username)
