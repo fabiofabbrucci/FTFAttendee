@@ -13,19 +13,20 @@
 	<meta name="author" content="Emanuele Rodriguez - erodri.com">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="image_src" href="img/logo_tofel.png" />
-	<link rel="shortcut icon" href="/static/favicon.ico">
+	<link rel="shortcut icon" href="http://2012.fromthefront.it/static/favicon.ico">
 
-	<link rel="stylesheet" href="css/internal.css?ver=3">
+	<link rel="stylesheet" href="css/internal.css?ver=5">
 
+	<script src="js/libs/modernizr.custom.js?v=1"></script>
 	<script src="js/libs/prefixfree.min.js"></script>
 </head>
 
 <body class="p-friends">
 
-	<div id="page">
+	<!-- toggle animations flag -->
+	<input type="checkbox" name="stopAnim" id="stopAnim">
 
-		<!-- toggle animations flag -->
-		<input type="checkbox" name="stopAnim" id="stopAnim">
+	<div id="page">
 
 		<header class="s-header" role="banner">
 
@@ -36,7 +37,9 @@
 			</div>
 
 			<div id="treasure">
-				<img src="img/int/hdr_logo_tofel.png" itemprop="image" alt="The Treasure of FrontEnd Island - Front End Conference" />
+				<a class="logo" href="index.html" title="Go to the home page">
+					<img src="img/int/hdr_logo_tofel.png" itemprop="image" alt="The Treasure of FrontEnd Island - Front End Conference" />
+				</a>
 				<div itemprop="summary" class="summary">The Treasure of FrontEnd Island</div>
 				<h1 itemprop="eventType" class="eventType">Front End Conference</h1>
 			</div>
@@ -44,10 +47,13 @@
 			<nav role="navigation" class="n-main">
 				<a class="nav-title" href="#">Menu</a>
 				<ul class="nav-list">
-					<li class="nav-item"><a href="index.html">Home</a></li>
-					<li class="nav-item"><a href="speakers.html">Speakers</a></li>
-					<li class="nav-item"><a href="workshops.html">Workshops</a></li>
-					<li class="nav-item"><a href="hotels.html">Accommodation</a></li>
+					<li class="nav-item"><a href="http://2012.fromthefront.it/">Home</a></li>
+					<li class="nav-item"><a href="http://2012.fromthefront.it/info.html">Info</a></li>
+					<li class="nav-item"><a href="http://2012.fromthefront.it/schedule.html">Schedule</a></li>
+					<li class="nav-item"><a href="http://2012.fromthefront.it/speakers.html">Speakers</a></li>
+					<li class="nav-item"><a href="http://2012.fromthefront.it/workshops.html">Workshops</a></li>
+					<!-- <li class="nav-item"><a href="http://2012.fromthefront.it/hotels.html">Accommodation</a></li> -->
+					<li class="nav-item"><a href="http://2012.fromthefront.it/#cart">Get your ticket!</a></li>
 				</ul>
 			</nav>
 
@@ -315,7 +321,7 @@
 
 			<ul class="m-authors">
 				<li class="author">Illustrated by <a rel="author nofollow" href="http://www.lorenzograndi.it" class="external" title="Lorenzo Grandi">Lorenzo Grandi</a></li>
-				<li class="author">Developed by <a rel="author nofollow" href="http://www.erodri.com" class="external" title="Emanuele Rodriguez - Nomad developer">Emanuele Rodriguez</a></li>
+				<li class="author">Developed by <a href="http://www.andreaverlicchi.eu" class="external" title="Andrea Verlicchi - Web developer with a passion for front-end">Andrea Verlicchi</a>, <a rel="author nofollow" href="http://www.erodri.com" class="external" title="Emanuele Rodriguez - Nomad developer">Emanuele Rodriguez</a>, <a rel="author nofollow" href="http://about.me/fabbrucci" class="external" title="Fabio Fabbrucci">Fabio Fabbrucci</li>
 				<li class="author">Design by <a rel="author" href="http://fromthefront.it" class="external" title="From The Front">From The Front</a></li>
 			</ul>
 
@@ -330,18 +336,12 @@
 
 	</div> <!-- /#page -->
 
-	<!-- External, framework agnostic, required scripts -->
-	<script src="js/libs/modernizr.custom.78952.js?v=1"></script>
-	<script src="js/libs/mobileEsp.min.js?v=1"></script>
-	<script src="js/libs/swipe.min.js?v=1"></script>
 	<!-- jQuery -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js?v=1"></script>
-	<script>window.jQuery || document.write('<script src="js/libs/jquery-1.7.1.min.js"><\/script>')</script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js?v=1"></script>
+	<script>window.jQuery || document.write('<script src="js/libs/jquery-1.8.1.min.js"><\/script>')</script>
 
 	<!-- Scope -->
-	<script src="js/libs/jquery.localscroll-1.2.7-min.js"></script>
-	<script src="js/libs/jquery.scrollTo-1.4.2-min.js"></script>
-	<script src="js/common.js?v=1"></script>
+	<script src="js/common.js?v=2"></script>
 	<script src="js/internal.scope.js?v=3"></script>
 
 	<!-- GA -->
