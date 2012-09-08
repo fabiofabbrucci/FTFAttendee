@@ -11,15 +11,16 @@
 
         <div class="m-friends">
             {% if not registered %}
-                <p>Want to you join them?</p>
-            {% endif %}
-            {% if followers|length > 0 %}
-                <h2>Your Followers</h2>
-                {% include 'FTFAttendeeBundle:Default:_users.html.twig' with {'attendees': followers } %}
+                <p>
+                <a href="http://2012.fromthefront.it/#cart" id="cart">Want to you join them?</a></p>
             {% endif %}
             {% if friends|length > 0 %}
                 <h2>Your Friends</h2>
                 {% include 'FTFAttendeeBundle:Default:_users.html.twig' with {'attendees': friends } %}
+            {% endif %}
+            {% if followers|length > 0 %}
+                <h2>Your Followers</h2>
+                {% include 'FTFAttendeeBundle:Default:_users.html.twig' with {'attendees': followers } %}
             {% endif %}
             {% include 'FTFAttendeeBundle::_form.html.twig' %}
         </div>

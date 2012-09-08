@@ -24,3 +24,25 @@
 .m-friends .friend:hover .handle {
   color: #333333; 
 }
+
+a#cart{
+    display: block;
+    width: 200px;
+    background:#C1E2E8;
+    color: #4B4A4A;
+    font-family: CaslonAntiqueRegular,sans-serif;
+    padding: 0px 0px 10px 0px;
+    margin: 10px auto;
+    font-size: 1.2em;
+    outline: none;
+}
+a#cart:hover{
+    outline: none;
+}
+
+h2{
+    font-weight: bold;
+    background:#eeeeee;
+    padding: 5px 0px;
+    margin-bottom: 10px; 
+}
