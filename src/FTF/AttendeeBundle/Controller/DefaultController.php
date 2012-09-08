@@ -103,26 +103,31 @@ class DefaultController extends Controller
             );
         }
         
-        $all = array_unique(array_merge($followers, $friends));
-        
         $em = $this->getDoctrine()->getEntityManager();
         $event = $em->getRepository('FTFAttendeeBundle:Event')
                 ->findOneByName('FTF 2012');
-        $attendees = $em->getRepository('FTFAttendeeBundle:Attendee')
-                ->findAllByTwitteridAndEvent($all, $event);
-        $organizators = $em->getRepository('FTFAttendeeBundle:Organizator')
-                ->findAllByTwitteridAndEvent($all, $event);
-        $speakers = $em->getRepository('FTFAttendeeBundle:Speaker')
-                ->findAllByTwitteridAndEvent($all, $event);
-        $users = array_merge($attendees, $organizators, $speakers);
-        usort($users, function ($a, $b){
-            return strcmp(strtolower($a->getTwitter()), strtolower($b->getTwitter()));
-        });
         
+        for($i=0;$i<2; $i++){
+            if($i == 0) $users = $followers;
+            else $users = $friends;
+            $attendees = $em->getRepository('FTFAttendeeBundle:Attendee')
+                    ->findAllByTwitteridAndEvent($users, $event);
+            $organizators = $em->getRepository('FTFAttendeeBundle:Organizator')
+                    ->findAllByTwitteridAndEvent($users, $event);
+            $speakers = $em->getRepository('FTFAttendeeBundle:Speaker')
+                    ->findAllByTwitteridAndEvent($users, $event);
+            $users = array_merge($attendees, $organizators, $speakers);
+            usort($users, function ($a, $b){
+                return strcmp(strtolower($a->getTwitter()), strtolower($b->getTwitter()));
+            });
+            if($i == 0) $followers = $users;
+            else $friends = $users;
+        }
         $user = $em->getRepository('FTFAttendeeBundle:User')->findOneByTwitter($username);
         
         $param = array(
-            'attendees' => $users,
+            'followers' => $followers,
+            'friends' => $friends,
             'username' => $username,
             'registered' => (bool)$user,
             'error' => false

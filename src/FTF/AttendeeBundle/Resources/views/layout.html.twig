@@ -4,11 +4,6 @@
     {{parent()}}
 
     {% javascripts
-        '@FTFAttendeeBundle/Resources/public/js/libs/modernizr.custom.78952.js'
-        '@FTFAttendeeBundle/Resources/public/js/libs/mobileEsp.min.js'
-        '@FTFAttendeeBundle/Resources/public/js/libs/swipe.min.js'
-        '@FTFAttendeeBundle/Resources/public/js/libs/jquery.localscroll-1.2.7-min.js'
-        '@FTFAttendeeBundle/Resources/public/js/libs/jquery.scrollTo-1.4.2-min.js'
         '@FTFAttendeeBundle/Resources/public/js/common.js'
         '@FTFAttendeeBundle/Resources/public/js/internal.scope.js'
         '@FTFAttendeeBundle/Resources/public/js/ios-orientationchange-fix.js'
@@ -17,7 +12,7 @@
         <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
         
-    <script>window.jQuery || document.write('<script src="bundles/ftfattendee/js/libs/jquery-1.7.1.min.js"><\/script>')</script>
+    <script>window.jQuery || document.write('<script src="bundles/ftfattendee/js/libs/jquery-1.8.1.min.js"><\/script>')</script>
 
     {% if app.environment == "prod" %}
         <script type="text/javascript">
@@ -33,7 +28,7 @@
             })();
         </script>
     {% endif %}
-        
+    
     <!--[if lt IE 7 ]>
             <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/chrome-frame/1.0.3/CFInstall.min.js"></script>
             <script type="text/javascript">window.attachEvent('onload',function(){CFInstall.check({mode:'overlay'})})</script>
@@ -46,11 +41,12 @@
         'bundles/ftfattendee/css/internal.css'
         'bundles/ftfattendee/css/application.css'
     %}
-<link rel="stylesheet" href="{{ asset_url }}" />
+    <link rel="stylesheet" href="{{ asset_url }}" />
     {% endstylesheets %}
 {% endblock %}
 
 {% block body %}
+    <input type="checkbox" name="stopAnim" id="stopAnim">
     <div id="page">
         {% include 'FTFAttendeeBundle::_header.html.twig' %}
 

@@ -46,6 +46,7 @@ class AttendeeCommand extends ContainerAwareCommand
         $count = 0;
         $first_line = true;
         $event = $this->er->findOneByName('FTF 2012');
+        //copy($event->getAmiandosecret(), 'attendee.csv');
         if (($handle = fopen($event->getAmiandosecret(), "r")) !== FALSE) {
             $this->ar->clear();
             $stack_account = array();
@@ -54,6 +55,8 @@ class AttendeeCommand extends ContainerAwareCommand
                     $first_line = !$first_line;
                     continue;
                 }
+                $data[0] = $this->convert_utf8($data[0]);
+                $data[1] = $this->convert_utf8($data[1]);
                 if (strlen($data[3]) and $count < 1000) {
                     $twitter = trim($data[3]);
                     if(substr($twitter, 0, 1) == '@'){
@@ -79,17 +82,25 @@ class AttendeeCommand extends ContainerAwareCommand
                     }
                     
                     if(isset($user)){
+                        $user->setName($data[0]);
+                        $user->setSurname($data[1]);
                         $att = new Attendee();
                         $att->setUser($user);
                         $att->setEvent($event);
+                        $this->em->persist($user);
                         $this->em->persist($att);
                         $this->em->flush();
                     }
                     $count++;
-                    $output->writeln("<info>$count) " . $twitter . "</info>");
+                    $output->writeln("<info>$count) " . $data[0] .' '. $twitter . "</info>");
                 }
             }
             $output->writeln("<info>loaded $count users</info>");
         }
+    }
+    
+    protected function convert_utf8($string) {
+        return mb_convert_encoding($string, 'UTF-8',
+            mb_detect_encoding($string, 'UTF-8, ISO-8859-1', true));
     }
 }
