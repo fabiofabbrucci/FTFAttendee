@@ -12,6 +12,7 @@ class DefaultController extends Controller
 {
     /**
      * @Route("/", name="index")
+     * @Route("/search", name="index_search")
      * @Method("get")
      * @Template()
      */
@@ -36,23 +37,6 @@ class DefaultController extends Controller
         return array('attendees' => $users);
     }
     
-    /**
-     * @Route("/", name="index_search")
-     * @Method("post")
-     */
-    public function indexSearchAction()
-    {
-        $request = $this->get('request');
-        $username = $request->request->get('username');
-        if($username){
-            return $this->redirect($this->generateUrl('search', array(
-                    'username' => $username,
-                )));
-        }else{
-            return $this->redirect($this->generateUrl('index'));   
-        }
-    }
-
     private function getFollowers($username)
     {
         if($content = file_get_contents('https://api.twitter.com/1/followers/ids.json?screen_name=' . $username)) {
@@ -74,14 +58,21 @@ class DefaultController extends Controller
     }                
     
     /**
-     * @Route("/search/{username}", name="search")
+     * @Route("/search", name="search")
+     * @Method("post")
      * @Template()
      */
-    public function searchAction($username)
+    public function searchAction()
     {
-        return array(
-            'username' => $username,
-        );
+        $request = $this->get('request');
+        $username = $request->request->get('username');
+        if($username){
+            return array(
+                'username' => $username,
+            );
+        }else{
+            return $this->redirect($this->generateUrl('index'));   
+        }
     }
     
     /**

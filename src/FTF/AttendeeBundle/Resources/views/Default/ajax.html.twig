@@ -10,10 +10,6 @@
         <p>Friends and Followers of <b>@{{ username }}</b> at From the Front 2012 </p>
 
         <div class="m-friends">
-            {% if not registered %}
-                <p>
-                <a href="http://2012.fromthefront.it/#cart" id="cart">Want to you join them?</a></p>
-            {% endif %}
             {% if friends|length > 0 %}
                 <h2>Your Friends</h2>
                 {% include 'FTFAttendeeBundle:Default:_users.html.twig' with {'attendees': friends } %}
@@ -21,6 +17,11 @@
             {% if followers|length > 0 %}
                 <h2>Your Followers</h2>
                 {% include 'FTFAttendeeBundle:Default:_users.html.twig' with {'attendees': followers } %}
+            {% endif %}
+            {% if not registered %}
+                <p>
+                <a href="http://2012.fromthefront.it/#cart" id="cart">Want to you join them?</a>
+                </p>
             {% endif %}
             {% include 'FTFAttendeeBundle::_form.html.twig' %}
         </div>
