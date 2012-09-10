@@ -5,25 +5,42 @@
         </div>
     {% else %}
         <div class="m-title">
-            <h1 class="title friends">Find your friends</h1>
+            <h1 class="title friends">Check who's coming</h1>
         </div>
-        <p>Friends and Followers of <b>@{{ username }}</b> at From the Front 2012 </p>
+
+        <p>Friends and Followers of <strong>@{{ username }}</strong> at The Treasure of Frontend Island </p>
 
         <div class="m-friends">
-            {% if friends|length > 0 %}
-                <h2>Your Friends</h2>
-                {% include 'FTFAttendeeBundle:Default:_users.html.twig' with {'attendees': friends } %}
+            {% if friends|length + followers|length <= 0 %}
+                <div class="intro">
+                    <p>It looks like none of the Friends and Followers of <strong>@{{ username }}</strong> is partecipating at The Treasure of Frontend Island.</p>
+                    <p>Do you want to try with another Twitter id?</p>
+                </div>
+            {%else %}
+                
+                {% if friends|length > 0 %}
+                    <h2>Your Friends</h2>
+                    {% include 'FTFAttendeeBundle:Default:_users.html.twig' with {'attendees': friends } %}
+                {% endif %}
+                {% if followers|length > 0 %}
+                    <h2>Your Followers</h2>
+                    {% include 'FTFAttendeeBundle:Default:_users.html.twig' with {'attendees': followers } %}
+                {% endif %}
             {% endif %}
-            {% if followers|length > 0 %}
-                <h2>Your Followers</h2>
-                {% include 'FTFAttendeeBundle:Default:_users.html.twig' with {'attendees': followers } %}
-            {% endif %}
-            {% if not registered %}
-                <p>
-                <a href="http://2012.fromthefront.it/#cart" id="cart">Want to you join them?</a>
-                </p>
-            {% endif %}
+
             {% include 'FTFAttendeeBundle::_form.html.twig' %}
+
+            {% if not registered %}
+                <div class="m-title">
+                    <h1 class="title speakers">No ticket yet?</h1>
+                </div>
+
+                <div class="ticket">
+                    <p>Still haven't got a ticket? What are you waiting to <strong>join your friends</strong> in their exciting journey to the Frontend Island?</p>
+                    <p>And remember to spread the word quickly, <strong>time is running up</strong>!</p>
+                    <a class="item-button" href="http://2012.fromthefront.it/#cart">Get your ticket now!</a>
+                </div>
+            {% endif %}
         </div>
     {% endif %}
     
