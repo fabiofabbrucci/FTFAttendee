@@ -8,9 +8,9 @@
             <h1 class="title friends">Check who's coming</h1>
         </div>
 
-        <p>Friends and Followers of <strong>@{{ username }}</strong> at The Treasure of Frontend Island </p>
-
         <div class="m-friends">
+            <p>Friends and Followers of <strong>@{{ username }}</strong> at The Treasure of Frontend Island </p>
+            
             {% if friends|length + followers|length <= 0 %}
                 <div class="intro">
                     <p>It looks like none of the Friends and Followers of <strong>@{{ username }}</strong> is partecipating at The Treasure of Frontend Island.</p>
