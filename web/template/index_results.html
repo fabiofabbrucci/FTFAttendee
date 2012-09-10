@@ -61,26 +61,18 @@
 
 
 		<div id="main" role="main" class="s-main">
-
-			<div class="m-title">
-				<h1 class="title friends">Check who's coming</h1>
-			</div> <!-- /.m-title -->
-
-			<div class="m-friends">
-
-				<!-- <h2 class="title">Lorem ipsum titulum sit amet</h2> -->
-
-				<div class="intro">
-					<p>A conference is not only a frontal lesson made by awesome teachers, a conference is an important networking opportunity: get in touch with people you follow online, drink something with your web dev hero or firmly shake your hand to someone you engaged a rough flame with ;)
-					</p>
-					<p>Enter your Twitter handle and discover whom of your friends or followers is coming to The Treasure of Frontend Island!</p>
+			<div id="results">
+				<div class="m-title">
+					<h1 class="title friends">Check who's coming</h1>
 				</div>
 
-				<form id="search" class="user" method="post" action="/search">
-					<input type="text" name="username" id="handle" placeholder="this is my twitter id..." />
-					<button type="submit">find my friends</button>
-				</form>
+				<div class="m-friends">
 
+					<div class="intro">
+						<p>Friends and Followers of <strong>@cedmax</strong> at The Treasure of Frontend Island</p>
+					</div>
+
+					<h2 class="group">Your Friends</h2>
 				<ul class="friends">
 					<li class="friend">
 						<a class="avatar external" href="http://www.twitter.com/cedmax">
@@ -294,7 +286,31 @@
 					</li>
 				</ul>
 
-			</div> <!-- /.m-friends -->
+					<form id="search" class="user" method="post" action="/search">
+						<input type="text" name="username" id="handle" placeholder="this is my twitter id...">
+						<button type="submit">find my friends</button>
+					</form>
+
+					<div class="m-title">
+						<h1 class="title speakers">No ticket yet?</h1>
+					</div> <!-- /.m-title -->
+
+					<div class="ticket">
+						<p>Still haven't got a ticket? What are you waiting to <strong>join your friends</strong> in their exciting journey to the Frontend Island?</p>
+						<a class="item-button" href="#cart">Get your ticket now!</a>
+					</div>
+
+				</div> <!-- /.m-friends -->
+
+			</div> <!-- /#results -->
+
+			<script>
+				$(document).ready(function(){
+					$.get('/ajax/search/cedmax', function(data) {
+						$('#results').html(data);
+					});
+				});
+			</script>
 
 		</div> <!-- /#main -->
 

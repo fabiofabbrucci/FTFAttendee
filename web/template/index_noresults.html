@@ -1,0 +1,173 @@
+<!doctype html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+	<title>Find your friends | From the Front 2012: The Treasure of FrontEnd Island, Front-End Conference</title>
+
+	<meta name="description" content="From the Front 2012: The Treasure of FrontEnd Island, Front-End Conference">
+	<meta name="author" content="Emanuele Rodriguez - erodri.com">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="image_src" href="img/logo_tofel.png" />
+	<link rel="shortcut icon" href="http://2012.fromthefront.it/static/favicon.ico">
+
+	<link rel="stylesheet" href="css/internal.css?ver=5">
+
+	<script src="js/libs/modernizr.custom.js?v=1"></script>
+	<script src="js/libs/prefixfree.min.js"></script>
+</head>
+
+<body class="p-friends">
+
+	<!-- toggle animations flag -->
+	<input type="checkbox" name="stopAnim" id="stopAnim">
+
+	<div id="page">
+
+		<header class="s-header" role="banner">
+
+			<div id="clouds">
+				<span class="cloud c1"></span>
+				<span class="cloud c2"></span>
+				<span class="cloud c3"></span>
+			</div>
+
+			<div id="treasure">
+				<a class="logo" href="index.html" title="Go to the home page">
+					<img src="img/int/hdr_logo_tofel.png" itemprop="image" alt="The Treasure of FrontEnd Island - Front End Conference" />
+				</a>
+				<div itemprop="summary" class="summary">The Treasure of FrontEnd Island</div>
+				<h1 itemprop="eventType" class="eventType">Front End Conference</h1>
+			</div>
+
+			<nav role="navigation" class="n-main">
+				<a class="nav-title" href="#">Menu</a>
+				<ul class="nav-list">
+					<li class="nav-item"><a href="http://2012.fromthefront.it/">Home</a></li>
+					<li class="nav-item"><a href="http://2012.fromthefront.it/info.html">Info</a></li>
+					<li class="nav-item"><a href="http://2012.fromthefront.it/schedule.html">Schedule</a></li>
+					<li class="nav-item"><a href="http://2012.fromthefront.it/speakers.html">Speakers</a></li>
+					<li class="nav-item"><a href="http://2012.fromthefront.it/workshops.html">Workshops</a></li>
+					<!-- <li class="nav-item"><a href="http://2012.fromthefront.it/hotels.html">Accommodation</a></li> -->
+					<li class="nav-item"><a href="http://2012.fromthefront.it/#cart">Get your ticket!</a></li>
+				</ul>
+			</nav>
+
+		</header>
+
+
+		<div id="main" role="main" class="s-main">
+			<div id="results">
+				<div class="m-title">
+					<h1 class="title friends">Check who's coming</h1>
+				</div>
+
+				<div class="m-friends">
+
+					<div class="intro">
+						<p>It looks like none of the Friends and Followers of <strong>@cedmax</strong> is partecipating at The Treasure of Frontend Island.</p>
+						<p>Do you want to try with another Twitter id?</p>
+					</div>
+
+					<form id="search" class="user" method="post" action="/search">
+						<input type="text" name="username" id="handle" placeholder="this is my twitter id..." />
+						<button type="submit">find my friends</button>
+					</form>
+
+					<div class="m-title">
+						<h1 class="title speakers">No ticket yet?</h1>
+					</div> <!-- /.m-title -->
+
+					<div class="ticket">
+						<p>Still haven't got a ticket? Be the <strong>first of your friends</strong> to start the exciting journey to the Frontend Island.</p>
+						<p>And remember to spread the word quickly, <strong>time is running up</strong>!</p>
+
+						<a class="item-button" href="#cart">Get your ticket now!</a>
+					</div>
+
+				</div> <!-- /.m-friends -->
+
+			</div> <!-- /#results -->
+
+			<script>
+				$(document).ready(function(){
+					$.get('/ajax/search/cedmax', function(data) {
+						$('#results').html(data);
+					});
+				});
+			</script>
+
+		</div> <!-- /#main -->
+
+		<footer class="s-footer">
+			<div id="horizon">
+				<div id="ground"></div>
+				<div id="ship">
+					<span class="silhouette"></span>
+					<span class="shadow"></span>
+				</div>
+				<div id="smoke">
+					<span class="puff p1"></span>
+					<span class="puff p2"></span>
+					<span class="puff p3"></span>
+					<span class="puff p4"></span>
+					<span class="puff p5"></span>
+ 					<span class="puff p6"></span>
+					<span class="puff p7"></span>
+					<span class="puff p8"></span>
+					<span class="puff p9"></span>
+					<span class="puff p10"></span>
+					<span class="puff p11"></span>
+					<span class="puff p12"></span>
+				</div>
+			</div>
+
+			<ul class="m-authors">
+				<li class="author">Illustrated by <a rel="author nofollow" href="http://www.lorenzograndi.it" class="external" title="Lorenzo Grandi">Lorenzo Grandi</a></li>
+				<li class="author">Developed by <a href="http://www.andreaverlicchi.eu" class="external" title="Andrea Verlicchi - Web developer with a passion for front-end">Andrea Verlicchi</a>, <a rel="author nofollow" href="http://www.erodri.com" class="external" title="Emanuele Rodriguez - Nomad developer">Emanuele Rodriguez</a>, <a rel="author nofollow" href="http://about.me/fabbrucci" class="external" title="Fabio Fabbrucci">Fabio Fabbrucci</li>
+				<li class="author">Design by <a rel="author" href="http://fromthefront.it" class="external" title="From The Front">From The Front</a></li>
+			</ul>
+
+			<ul class="m-corp">
+				<li class="link"><a class="external" href="http://fromthefront.it">FROMTHEFRONT.IT</a></li>
+				<li class="link"><a href="https://www.iubenda.com/privacy-policy/155299" class="iubenda-nostyle" id="iubenda-embed" title="Privacy Policy">Privacy Policy</a><script>(function (w,d) {var loader = function () {var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0]; s.src = "https://cdn.iubenda.com/iubenda.js"; tag.parentNode.insertBefore(s,tag);}; w.addEventListener ? w.addEventListener("load", loader, false) : w.attachEvent("onload", loader);})(window, document);</script></li>
+			</ul>
+
+		</footer>
+
+		<label id="toggleAnimations" for="stopAnim">Toggle animations</label>
+
+	</div> <!-- /#page -->
+
+	<!-- jQuery -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js?v=1"></script>
+	<script>window.jQuery || document.write('<script src="js/libs/jquery-1.8.1.min.js"><\/script>')</script>
+
+	<!-- Scope -->
+	<script src="js/common.js?v=2"></script>
+	<script src="js/internal.scope.js?v=3"></script>
+
+	<!-- GA -->
+	<script>
+	var _gaq = _gaq || [];
+	_gaq.push(['_setAccount', 'UA-240287-21']);
+	_gaq.push(['_setDomainName', 'fromthefront.it']);
+	_gaq.push(['_trackPageview']);
+	(function() {
+		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0];
+		s.parentNode.insertBefore(ga, s);
+	})();
+	</script>
+	<script src="js/ios-orientationchange-fix.js"></script>
+	<!--[if lt IE 7 ]>
+		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/chrome-frame/1.0.3/CFInstall.min.js"></script>
+		<script type="text/javascript">window.attachEvent('onload',function(){CFInstall.check({mode:'overlay'})})</script>
+	<![endif]-->
+</body>
+</html>
