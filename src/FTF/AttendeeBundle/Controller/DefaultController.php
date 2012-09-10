@@ -125,7 +125,7 @@ class DefaultController extends Controller
         );
         
         $response = $this->render('FTFAttendeeBundle:Default:ajax.html.twig', $param);
-        $response->setSharedMaxAge(60*60*24);
+        $response->setMaxAge(60*60*24);
 
         return $response;
     }
