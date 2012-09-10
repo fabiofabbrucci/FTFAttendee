@@ -124,7 +124,12 @@ class DefaultController extends Controller
             'error' => false
         );
         
+        return $this->render('FTFAttendeeBundle:Default:ajax.html.twig', $param);
+        
         $response = $this->render('FTFAttendeeBundle:Default:ajax.html.twig', $param);
+        $response->setETag(md5($response->getContent()));
+        $response->setPublic();
+        $response->setSharedMaxAge(60*60*24);
         $response->setMaxAge(60*60*24);
 
         return $response;
