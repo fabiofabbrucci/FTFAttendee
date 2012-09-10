@@ -2,7 +2,7 @@ imports:
     - { resource: config.yml }
     
 framework:
-    esi: { enabled: true }
+    #esi: { enabled: true }
     templating:      { engines: ['twig'], assets_version: v1 }
 
 #doctrine:
