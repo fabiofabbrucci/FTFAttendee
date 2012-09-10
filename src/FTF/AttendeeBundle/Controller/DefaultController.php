@@ -15,7 +15,7 @@ class DefaultController extends Controller
      * @Route("/search", name="index_search")
      * @Method("get")
      * @Template()
-     * @Cache("+1 hours")
+     * @Cache(expires="+1 hours")
      */
     public function indexAction()
     {
@@ -79,7 +79,7 @@ class DefaultController extends Controller
     /**
      * @Route("/ajax/search/{username}", name="ajax")
      * @Template()
-     * @Cache("+1 hours")
+     * @Cache(expires="+1 hours")
      */
     public function ajaxAction($username)
     {
