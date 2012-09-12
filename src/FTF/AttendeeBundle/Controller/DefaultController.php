@@ -7,6 +7,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
 
 class DefaultController extends Controller
 {
@@ -44,6 +46,12 @@ class DefaultController extends Controller
             $followers = json_decode($content);
             return $followers->ids;
         }else{
+            
+            $kernel = $this->get('kernel');
+            $logger = $this->get('logger');
+            $logger->pushHandler(new StreamHandler($kernel->getLogDir() . '/twitter.log', Logger::INFO));
+            $logger->err('Reached Limit loooking for ['.$username.']');
+            
             return false;
         }
     }                
@@ -54,6 +62,12 @@ class DefaultController extends Controller
             $followers = json_decode($content);
             return $followers->ids;
         }else{
+            
+            $kernel = $this->get('kernel');
+            $logger = $this->get('logger');
+            $logger->pushHandler(new StreamHandler($kernel->getLogDir() . '/twitter.log', Logger::INFO));
+            $logger->err('Reached Limit loooking for ['.$username.']');
+            
             return false;
         }
     }                
@@ -65,8 +79,14 @@ class DefaultController extends Controller
      */
     public function searchAction()
     {
+        $kernel = $this->get('kernel');
         $request = $this->get('request');
         $username = $request->request->get('username');
+        
+        $logger = $this->get('logger');
+        $logger->pushHandler(new StreamHandler($kernel->getLogDir() . '/twitter.log', Logger::INFO));
+        $logger->info($username);
+        
         if($username){
             return array(
                 'username' => $username,
